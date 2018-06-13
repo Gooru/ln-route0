@@ -50,10 +50,21 @@ COMMENT on COLUMN route0_queue.status IS '0 means queued, 1 means dispatched for
 COMMENT on COLUMN route0_queue.priority IS '1 means route0 setting changed in class, 2 means course assigned to class, 3 means users joining class and 4 means OOB request for user accessing the route0 content';
 
 
-
 -- route0_units
 -- route0_lessons
 -- route0_collections
 -- route0_baseline_profile
 -- taxonomy_*
 -- competency_content_map (LM)
+
+-- THIS TABLE NEEDS TO BE CREATED IN DSDB
+CREATE TABLE user_domain_competency_matrix (
+    id bigserial,
+    tx_subject_code text NOT NULL,
+	user_id text NOT NULL,
+    tx_domain_code text NOT NULL,
+    tx_comp_code text NOT NULL,
+    tx_comp_seq smallint NOT NULL DEFAULT 0,
+    CONSTRAINT udcm_pkey PRIMARY KEY (id)
+    UNIQUE(tx_subject_code, user_id, tx_domain_code)
+);
