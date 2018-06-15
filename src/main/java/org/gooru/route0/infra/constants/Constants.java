@@ -1,5 +1,7 @@
 package org.gooru.route0.infra.constants;
 
+import java.util.UUID;
+
 /**
  * @author ashish.
  */
@@ -72,6 +74,15 @@ public final class Constants {
         public static final String API_INTERNAL_METRICS = "/api/internal/metrics";
 
         private Route() {
+            throw new AssertionError();
+        }
+    }
+
+    public static final class Misc {
+
+        public static final String COMPETENCY_PLACEHOLDER = new UUID(0, 0).toString();
+
+        private Misc() {
             throw new AssertionError();
         }
     }

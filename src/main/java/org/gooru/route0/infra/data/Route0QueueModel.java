@@ -116,8 +116,8 @@ public class Route0QueueModel {
     public static class Route0QueueModelMapper implements ResultSetMapper<Route0QueueModel> {
 
         @Override
-        public Route0QueueModel map(final int index, final ResultSet resultSet,
-            final StatementContext statementContext) throws SQLException {
+        public Route0QueueModel map(final int index, final ResultSet resultSet, final StatementContext statementContext)
+            throws SQLException {
             Route0QueueModel model = new Route0QueueModel();
             model.setId(resultSet.getLong("id"));
             model.setPriority(resultSet.getInt("priority"));

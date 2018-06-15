@@ -84,3 +84,20 @@ To run the binary which would be fat jar:
     - For the first run of timer thread, it should clean up all statuses in DB queue so that they are picked up for processing downstream
     - The number of records that are read from DB/queue and dumped on to message bus for processing, needs to be configurable
 
+### Terminologies (Technical model)
+
+#### Competency
+A point in two dimension of progression and domain. Belongs to a subject and has a code.
+
+#### Competency Path
+The progression between two given competencies iff they belong to same subject and have same domain dimension. There is a directionality associated with path which implies that if one swaps source and destination competencies, the obtained path will be same with different directionality.
+
+#### Competency Map
+A collection of competencies from which we can deduce the dimension of domains and progression. Competency map is analogus to geometrical plane. Since there could be multiple competencies per domain, one can draw one unique skyline and one unique earthline. If there is single competency per domain in competency map, then skyline and earthline are same.
+
+#### Competency Line
+Linear representation of given competencies in plane, if both dimensions are changing simultaneously. Note that if the domain dimension is constant then one will get Competency Path (from representation perspective on competency map). This is represented as Set of unique domain and progression combination where domain does not repeat.
+
+### Competency Route
+Give two competency lines, it denotes the competency path for each domain present in destination which is needed to collapse two lines. If the source line denotes learner proficiency skyline, and destination denotes earthline for competencies covered by course then competency route is called route to destination.
+

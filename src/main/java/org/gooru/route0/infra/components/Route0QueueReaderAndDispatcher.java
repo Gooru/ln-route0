@@ -72,11 +72,12 @@ public final class Route0QueueReaderAndDispatcher implements Initializer, Finali
             }, asyncResult -> {
                 if (asyncResult.succeeded()) {
                     if (asyncResult.result().isModelPersisted()) {
-                        vertx.eventBus().send(Constants.EventBus.MBEP_ROUTE0_QUEUE_PROCESSOR, asyncResult.result().toJson(),
-                            DeliveryOptionsBuilder.buildWithoutApiVersion(ROUTE0_PROCESS_TIMEOUT),
-                            eventBusResponse -> {
-                                timerId = vertx.setTimer(delay, new TimerHandler(vertx, firstTrigger));
-                            });
+                        vertx.eventBus()
+                            .send(Constants.EventBus.MBEP_ROUTE0_QUEUE_PROCESSOR, asyncResult.result().toJson(),
+                                DeliveryOptionsBuilder.buildWithoutApiVersion(ROUTE0_PROCESS_TIMEOUT),
+                                eventBusResponse -> {
+                                    timerId = vertx.setTimer(delay, new TimerHandler(vertx, firstTrigger));
+                                });
                     } else {
                         timerId = vertx.setTimer(delay, new TimerHandler(vertx, firstTrigger));
                     }
