@@ -11,7 +11,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 /**
  * @author ashish.
  */
-public interface CompetencyFetcherDao {
+interface CompetencyFetcherDao {
 
     @Mapper(SqlArrayMapper.class)
     @SqlQuery("select gut_codes from course where id = :courseId and is_deleted = false")

@@ -17,7 +17,7 @@ final class VersionValidatorUtility {
     private static final Logger LOGGER = LoggerFactory.getLogger(VersionValidatorUtility.class);
     private static final String API_VERSION_DEPRECATED = "API version is deprecated";
     private static final String API_VERSION_NOT_SUPPORTED = "API version is not supported";
-    private static final List<String> supportedVersions = Arrays.asList("v1", "v2");
+    private static final List<String> supportedVersions = Arrays.asList("v1");
     private static final List<String> deprecatedVersions = new ArrayList<>();
 
     private VersionValidatorUtility() {

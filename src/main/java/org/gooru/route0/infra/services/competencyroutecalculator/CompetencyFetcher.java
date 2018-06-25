@@ -9,7 +9,7 @@ import org.skife.jdbi.v2.DBI;
 /**
  * @author ashish.
  */
-public interface CompetencyFetcher {
+interface CompetencyFetcher {
     List<String> fetchCompetenciesForCourse(UUID courseId);
 
     static CompetencyFetcher build() {

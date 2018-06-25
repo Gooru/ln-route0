@@ -48,6 +48,9 @@ public class Route0Verticle extends AbstractVerticle {
             future = ProcessorBuilder.buildDoRoute0OfContentProcessor(vertx, message).process();
             replyNeeded = false;
             break;
+        case Constants.Message.MSG_OP_ROUTE0_COMPETENCY_ROUTE_INTERNAL:
+            future = ProcessorBuilder.buildCalculateCompetencyMapProcessor(vertx, message).process();
+            break;
         default:
             LOGGER.warn("Invalid operation type");
             future = ProcessorBuilder.buildPlaceHolderExceptionProcessor(vertx, message).process();

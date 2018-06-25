@@ -39,6 +39,7 @@ public final class Constants {
 
         public static final String MSG_OP_ROUTE0_GET = "route0.get";
         public static final String MSG_OP_ROUTE0_SET = "route0.set";
+        public static final String MSG_OP_ROUTE0_COMPETENCY_ROUTE_INTERNAL = "route0.internal.competency.route";
 
         public static final String MSG_MESSAGE = "message";
         public static final String ACCESS_TOKEN_VALIDITY = "access_token_validity";
@@ -72,6 +73,7 @@ public final class Constants {
         public static final String API_ROUTE0_CALCULATE = API_BASE_ROUTE + "rtd";
         public static final String API_INTERNAL_BANNER = "/api/internal/banner";
         public static final String API_INTERNAL_METRICS = "/api/internal/metrics";
+        public static final String API_INTERNAL_COMPETENCY_ROUTE = "/api/internal/rtd/competency";
 
         private Route() {
             throw new AssertionError();
@@ -81,6 +83,7 @@ public final class Constants {
     public static final class Misc {
 
         public static final String COMPETENCY_PLACEHOLDER = new UUID(0, 0).toString();
+        public static final String USER_PLACEHOLDER = new UUID(0, 0).toString();
 
         private Misc() {
             throw new AssertionError();

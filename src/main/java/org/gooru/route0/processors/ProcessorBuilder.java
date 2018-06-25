@@ -1,5 +1,6 @@
 package org.gooru.route0.processors;
 
+import org.gooru.route0.processors.calculatecompetencyroute.CalculateCompetencyRouteProcessor;
 import org.gooru.route0.processors.doroute0ofcontent.DoRoute0OfContentProcessor;
 import org.gooru.route0.processors.fetchroute0content.FetchRoute0ContentProcessor;
 import org.gooru.route0.responses.MessageResponse;
@@ -30,4 +31,7 @@ public final class ProcessorBuilder {
         };
     }
 
+    public static AsyncMessageProcessor buildCalculateCompetencyMapProcessor(Vertx vertx, Message<JsonObject> message) {
+        return new CalculateCompetencyRouteProcessor(vertx, message);
+    }
 }
