@@ -23,8 +23,8 @@ public class FetchRoute0ContentProcessor implements AsyncMessageProcessor {
     private final Future<MessageResponse> result;
     private EventBusMessage eventBusMessage;
     private static final Logger LOGGER = LoggerFactory.getLogger(FetchRoute0ContentProcessor.class);
-    private final FetchRoute0dContentService fetchRoute0dContentService =
-        new FetchRoute0dContentService(DBICreator.getDbiForDefaultDS());
+    private final FetchRoute0ContentService fetchRoute0ContentService =
+        new FetchRoute0ContentService(DBICreator.getDbiForDefaultDS());
 
     public FetchRoute0ContentProcessor(Vertx vertx, Message<JsonObject> message) {
         this.message = message;
@@ -39,7 +39,7 @@ public class FetchRoute0ContentProcessor implements AsyncMessageProcessor {
                 this.eventBusMessage = EventBusMessage.eventBusMessageBuilder(message);
 
                 FetchRoute0ContentCommand command = FetchRoute0ContentCommand.builder(eventBusMessage);
-                String route0Content = fetchRoute0dContentService.fetchRoute0Content(command);
+                FetchRoute0ContentResponse route0Content = fetchRoute0ContentService.fetchRoute0Content(command);
                 future.complete(createResponse(route0Content));
             } catch (Throwable throwable) {
                 LOGGER.warn("Encountered exception", throwable);
@@ -55,11 +55,11 @@ public class FetchRoute0ContentProcessor implements AsyncMessageProcessor {
         return result;
     }
 
-    private MessageResponse createResponse(String route0Content) {
+    private MessageResponse createResponse(FetchRoute0ContentResponse route0Content) {
         if (route0Content == null) {
             return MessageResponseFactory.createNotFoundResponse("Route0 content not found");
         }
-        return MessageResponseFactory.createOkayResponse(new JsonObject(route0Content));
+        return MessageResponseFactory.createOkayResponse(route0Content.asJson());
     }
 
 }

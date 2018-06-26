@@ -9,18 +9,18 @@ import org.skife.jdbi.v2.DBI;
 /**
  * @author ashish.
  */
-class FetchRoute0dContentService {
+class FetchRoute0ContentService {
 
     private final DBI dbi;
     private FetchRoute0ContentCommand command;
 
-    FetchRoute0dContentService(DBI dbi) {
+    FetchRoute0ContentService(DBI dbi) {
         this.dbi = dbi;
     }
 
-    String fetchRoute0Content(FetchRoute0ContentCommand command) {
+    FetchRoute0ContentResponse fetchRoute0Content(FetchRoute0ContentCommand command) {
         this.command = command;
-        String result;
+        FetchRoute0ContentResponse result;
 
         if (command.getClassId() != null) {
             if (command.isTeacherContext()) {
@@ -41,14 +41,14 @@ class FetchRoute0dContentService {
         }
     }
 
-    private void queueRoute0ContentRequestIfNeeded(String result) {
+    private void queueRoute0ContentRequestIfNeeded(FetchRoute0ContentResponse result) {
         if (result == null) {
             Route0RequestQueueService service = Route0RequestQueueService.build();
             service.enqueue(command.asRoute0Context());
         }
     }
 
-    private String fetchRoute0ContentForIL() {
+    private FetchRoute0ContentResponse fetchRoute0ContentForIL() {
         if (Route0ApplicableService.isRoute0ApplicableToCourseInIL(command.getCourseId())) {
             return getDao().fetchRoute0ContentForUserInIL(command.asBean());
         } else {
@@ -58,7 +58,7 @@ class FetchRoute0dContentService {
 
     }
 
-    private String fetchRoute0ContentForClass() {
+    private FetchRoute0ContentResponse fetchRoute0ContentForClass() {
         if (Route0ApplicableService.isRoute0ApplicableToClass(command.getClassId())) {
             return getDao().fetchRoute0ContentForUserInClass(command.asBean());
         } else {

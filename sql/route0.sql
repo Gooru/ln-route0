@@ -6,6 +6,7 @@ create table user_route0_content (
     user_id uuid NOT NULL,
     course_id uuid NOT NULL,
     class_id uuid,
+    status text NOT NULL DEFAULT 'pending' CHECK (status::text = ANY(ARRAY['pending'::text, 'accepted'::text, 'rejected'::text])),
     route0_content jsonb NOT NULL,
     created_at timestamp without time zone DEFAULT timezone('UTC'::text, now()) NOT NULL,
     CONSTRAINT ur0c_pkey PRIMARY KEY (id)
@@ -49,22 +50,9 @@ COMMENT on TABLE route0_queue IS 'Persistent queue for route0 tasks';
 COMMENT on COLUMN route0_queue.status IS '0 means queued, 1 means dispatched for processing, 2 means in process';
 COMMENT on COLUMN route0_queue.priority IS '1 means route0 setting changed in class, 2 means course assigned to class, 3 means users joining class and 4 means OOB request for user accessing the route0 content';
 
+-- user_route0_unit
+-- user_route0_lesson
+-- user_route0_collection
 
--- route0_units
--- route0_lessons
--- route0_collections
--- route0_baseline_profile
--- taxonomy_*
+
 -- competency_content_map (LM)
-
--- THIS TABLE NEEDS TO BE CREATED IN DSDB
-CREATE TABLE user_domain_competency_matrix (
-    id bigserial,
-    tx_subject_code text NOT NULL,
-	user_id text NOT NULL,
-    tx_domain_code text NOT NULL,
-    tx_comp_code text NOT NULL,
-    tx_comp_seq smallint NOT NULL DEFAULT 0,
-    CONSTRAINT udcm_pkey PRIMARY KEY (id)
-    UNIQUE(tx_subject_code, user_id, tx_domain_code)
-);
