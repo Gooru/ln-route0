@@ -8,11 +8,11 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
  */
 interface FetchRoute0ContentDao {
 
-    @SqlQuery("select skipped_content from user_route0_content where user_id = :userId and course_id = :courseId "
+    @SqlQuery("select route0_content from user_route0_content where user_id = :userId and course_id = :courseId "
                   + " and class_id = :classId")
     String fetchRoute0ContentForUserInClass(@BindBean FetchRoute0ContentCommand.FetchRoute0ContentCommandBean bean);
 
-    @SqlQuery("select skipped_content from user_route0_content where user_id = :userId and course_id = :courseId "
+    @SqlQuery("select route0_content from user_route0_content where user_id = :userId and course_id = :courseId "
                   + " and class_id is null")
     String fetchRoute0ContentForUserInIL(@BindBean FetchRoute0ContentCommand.FetchRoute0ContentCommandBean bean);
 

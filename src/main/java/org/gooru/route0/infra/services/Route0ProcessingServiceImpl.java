@@ -49,10 +49,10 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
             String result = "TODO: get real result";
             ObjectMapper mapper = new ObjectMapper();
             try {
-                String skippedItemsString = mapper.writeValueAsString(result);
-                dao.persistRoute0Content(model, skippedItemsString);
+                String route0ContentString = mapper.writeValueAsString(result);
+                dao.persistRoute0Content(model, route0ContentString);
             } catch (JsonProcessingException e) {
-                LOGGER.warn("Not able to convert skipped items to JSON for model '{}'", model.toJson(), e);
+                LOGGER.warn("Not able to convert route0 items to JSON for model '{}'", model.toJson(), e);
             }
         } catch (Exception e) {
             LOGGER.warn("Not able to calculate route0 for model: '{}'. Will dequeue record.", e);
