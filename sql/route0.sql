@@ -50,9 +50,29 @@ COMMENT on TABLE route0_queue IS 'Persistent queue for route0 tasks';
 COMMENT on COLUMN route0_queue.status IS '0 means queued, 1 means dispatched for processing, 2 means in process';
 COMMENT on COLUMN route0_queue.priority IS '1 means route0 setting changed in class, 2 means course assigned to class, 3 means users joining class and 4 means OOB request for user accessing the route0 content';
 
--- user_route0_unit
--- user_route0_lesson
--- user_route0_collection
+
+create table user_route0_content_detail (
+    id bigserial NOT NULL,
+    user_route0_content_id bigint NOT NULL,
+    unit_id uuid NOT NULL,
+    unit_title text NOT NULL,
+    unit_sequence int NOT NULL,
+    lesson_id uuid NOT NULL,
+    lesson_title text NOT NULL,
+    lesson_sequence int NOT NULL,
+    collection_id uuid NOT NULL,
+    collection_type text NOT NULL,
+    collection_sequence int NOT NULL,
+    route0_sequence int NOT NULL,
+    CONSTRAINT ur0cd_pkey PRIMARY KEY (id),
+    CONSTRAINT ur0cd_ur0c_r0seq_unq UNIQUE (user_route0_content_id, route0_sequence),
+    CONSTRAINT ur0ci_fkey FOREIGN KEY(user_route0_content_id) references user_route0_content(id),
+    CONSTRAINT ur0cd_ur0c_coll_unq UNIQUE (user_route0_content_id, collection_id)
+);
+
+ALTER TABLE user_route0_content_detail OWNER TO nucleus;
+
+CREATE INDEX ur0cd_ulcs_idx ON user_route0_content_detail USING BTREE (unit_id, lesson_id, collection_id, route0_sequence ASC);
 
 
 -- competency_content_map (LM)
