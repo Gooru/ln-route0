@@ -48,6 +48,9 @@ public class Route0Verticle extends AbstractVerticle {
             future = ProcessorBuilder.buildDoRoute0OfContentProcessor(vertx, message).process();
             replyNeeded = false;
             break;
+        case Constants.Message.MSG_OP_ROUTE0_SET_STATUS:
+            future = ProcessorBuilder.buildAcceptRejectRoute0Processor(vertx, message).process();
+            break;
         case Constants.Message.MSG_OP_ROUTE0_COMPETENCY_ROUTE_INTERNAL:
             future = ProcessorBuilder.buildCalculateCompetencyMapProcessor(vertx, message).process();
             break;

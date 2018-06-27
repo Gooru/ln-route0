@@ -5,5 +5,4 @@ package org.gooru.route0.infra.services.competencyroutetocontentroutemapper;
  */
 public interface ContentRouteModel {
 
-
 }
