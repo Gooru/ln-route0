@@ -42,7 +42,16 @@ class RouteInternalConfigurator implements RouteConfigurator {
             routingContext.response().end(ebMetrics.toString());
         });
         router.get(Constants.Route.API_INTERNAL_COMPETENCY_ROUTE).handler(this::calculateRoute0CompetencyMap);
+        router.get(Constants.Route.API_INTERNAL_COMPETENCY_CONTENT_ROUTE)
+            .handler(this::calculateRoute0CompetencyContentMap);
 
+    }
+
+    private void calculateRoute0CompetencyContentMap(RoutingContext routingContext) {
+        DeliveryOptions options = DeliveryOptionsBuilder.buildWithoutApiVersion(mbusTimeout)
+            .addHeader(Constants.Message.MSG_OP, Constants.Message.MSG_OP_ROUTE0_COMPETENCY_CONTENT_ROUTE_INTERNAL);
+        eb.<JsonObject>send(Constants.EventBus.MBEP_ROUTE0, RouteRequestUtility.getBodyForMessage(routingContext),
+            options, reply -> RouteResponseUtility.responseHandler(routingContext, reply, LOGGER));
     }
 
     private void calculateRoute0CompetencyMap(RoutingContext routingContext) {

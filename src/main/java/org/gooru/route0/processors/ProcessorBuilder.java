@@ -1,6 +1,7 @@
 package org.gooru.route0.processors;
 
 import org.gooru.route0.processors.acceptrejectroute0.AcceptRejectRoute0Processor;
+import org.gooru.route0.processors.calculatecompetencycontentroute.CalculateCompetencyContentRouteProcessor;
 import org.gooru.route0.processors.calculatecompetencyroute.CalculateCompetencyRouteProcessor;
 import org.gooru.route0.processors.doroute0ofcontent.DoRoute0OfContentProcessor;
 import org.gooru.route0.processors.fetchroute0content.FetchRoute0ContentProcessor;
@@ -39,4 +40,10 @@ public final class ProcessorBuilder {
     public static AsyncMessageProcessor buildAcceptRejectRoute0Processor(Vertx vertx, Message<JsonObject> message) {
         return new AcceptRejectRoute0Processor(vertx, message);
     }
+
+    public static AsyncMessageProcessor buildCalculateCompetencyContentMapProcessor(Vertx vertx,
+        Message<JsonObject> message) {
+        return new CalculateCompetencyContentRouteProcessor(vertx, message);
+    }
+
 }

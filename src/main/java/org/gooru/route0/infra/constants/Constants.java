@@ -41,6 +41,8 @@ public final class Constants {
         public static final String MSG_OP_ROUTE0_SET = "route0.set";
         public static final String MSG_OP_ROUTE0_SET_STATUS = "route0.status.set";
         public static final String MSG_OP_ROUTE0_COMPETENCY_ROUTE_INTERNAL = "route0.internal.competency.route";
+        public static final String MSG_OP_ROUTE0_COMPETENCY_CONTENT_ROUTE_INTERNAL =
+            "route0.internal.competency.content.route";
 
         public static final String MSG_MESSAGE = "message";
         public static final String ACCESS_TOKEN_VALIDITY = "access_token_validity";
@@ -78,6 +80,7 @@ public final class Constants {
         public static final String API_INTERNAL_BANNER = "/api/internal/banner";
         public static final String API_INTERNAL_METRICS = "/api/internal/metrics";
         public static final String API_INTERNAL_COMPETENCY_ROUTE = "/api/internal/rtd/competency";
+        public static final String API_INTERNAL_COMPETENCY_CONTENT_ROUTE = "/api/internal/rtd/competency/content";
 
         private Route() {
             throw new AssertionError();
