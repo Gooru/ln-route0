@@ -65,7 +65,4 @@ interface Route0RequestQueueDao {
                   + "and class_id is null)")
     boolean route0DoneForUserInIL(@BindBean Route0QueueModel model);
 
-    @SqlUpdate("insert into user_route0_content(user_id, class_id, course_id, route0_content) values (:userId, "
-                   + ":classId, :courseId, :route0Content::jsonb)")
-    void persistRoute0Content(@BindBean Route0QueueModel model, @Bind("route0Content") String route0Content);
 }

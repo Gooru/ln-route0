@@ -26,6 +26,5 @@ public class JdbiTest {
         model.setUserId(UUID.randomUUID());
         model.setCourseId(UUID.randomUUID());
 
-        dao.persistRoute0Content(model, new JsonObject().put("a", "b").put("c", "d").toString());
     }
 }

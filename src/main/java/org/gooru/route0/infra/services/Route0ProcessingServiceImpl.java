@@ -50,7 +50,6 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 String route0ContentString = mapper.writeValueAsString(result);
-                dao.persistRoute0Content(model, route0ContentString);
             } catch (JsonProcessingException e) {
                 LOGGER.warn("Not able to convert route0 items to JSON for model '{}'", model.toJson(), e);
             }

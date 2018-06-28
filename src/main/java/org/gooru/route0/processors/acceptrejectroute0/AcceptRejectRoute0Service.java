@@ -1,6 +1,7 @@
 package org.gooru.route0.processors.acceptrejectroute0;
 
 import org.gooru.route0.infra.constants.HttpConstants;
+import org.gooru.route0.infra.data.Route0StatusValues;
 import org.gooru.route0.infra.exceptions.HttpResponseWrapperException;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;

@@ -61,7 +61,7 @@ create table user_route0_content_detail (
     lesson_title text NOT NULL,
     lesson_sequence int NOT NULL,
     collection_id uuid NOT NULL,
-    collection_type text NOT NULL,
+    collection_type text NOT NULL CHECK (collection_type::text = ANY (ARRAY['collection'::text, 'collection-external'::text, 'assessment'::text, 'assessment-external'::text])),
     collection_sequence int NOT NULL,
     route0_sequence int NOT NULL,
     CONSTRAINT ur0cd_pkey PRIMARY KEY (id),

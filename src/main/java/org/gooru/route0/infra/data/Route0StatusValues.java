@@ -1,4 +1,4 @@
-package org.gooru.route0.processors.acceptrejectroute0;
+package org.gooru.route0.infra.data;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,30 +6,46 @@ import java.util.List;
 /**
  * @author ashish.
  */
-final class Route0StatusValues {
+public final class Route0StatusValues {
     private static final String STATUS_ACCEPTED = "accepted";
     private static final String STATUS_REJECTED = "rejected";
     private static final String STATUS_PENDING = "pending";
     private static final String STATUS_NA = "na";
     private static final List<String> VALID_UPDATEABLE_STATUS_VALUES = Arrays.asList(STATUS_ACCEPTED, STATUS_REJECTED);
 
-    static List<String> getValidUpdateableStatusValues() {
+    public static String getStatusAccepted() {
+        return STATUS_ACCEPTED;
+    }
+
+    public static String getStatusRejected() {
+        return STATUS_REJECTED;
+    }
+
+    public static String getStatusPending() {
+        return STATUS_PENDING;
+    }
+
+    public static String getStatusNa() {
+        return STATUS_NA;
+    }
+
+    public static List<String> getValidUpdateableStatusValues() {
         return VALID_UPDATEABLE_STATUS_VALUES;
     }
 
-    static boolean isStatusNotApplicable(String status) {
+    public static boolean isStatusNotApplicable(String status) {
         return STATUS_NA.equals(status);
     }
 
-    static boolean isStatusPending(String status) {
+    public static boolean isStatusPending(String status) {
         return STATUS_PENDING.equals(status);
     }
 
-    static boolean isStatusAccepted(String status) {
+    public static boolean isStatusAccepted(String status) {
         return STATUS_ACCEPTED.equals(status);
     }
 
-    static boolean isStatusRejected(String status) {
+    public static boolean isStatusRejected(String status) {
         return STATUS_REJECTED.equals(status);
     }
 
