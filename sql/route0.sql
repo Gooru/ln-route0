@@ -76,3 +76,33 @@ CREATE INDEX ur0cd_ulcs_idx ON user_route0_content_detail USING BTREE (unit_id, 
 
 
 -- competency_content_map (LM)
+
+-- competency_content_map (LM)
+
+create table competency_content_map (
+    id bigserial NOT NULL PRIMARY KEY,
+    subject text NOT NULL,
+    course text NOT NULL,
+    domain text NOT NULL,
+    competency text NOT NULL,
+    micro_competency text,
+    content_type text NOT NULL CHECK (content_type::text = ANY (ARRAY['collection'::text, 'collection-external'::text, 'assessment'::text, 'assessment-external'::text])),
+    item_id text NOT NULL,
+    weight real,
+    item_count int,
+    video_affinity real,
+    webpage_affinity real,
+    interactive_affinity real,
+    image_affinity real,
+    text_affinity real,
+    audio_affinity real,
+    estimated_timespent real,
+    is_published boolean,
+    is_featured boolean,
+    CONSTRAINT ccm_scdci_unq UNIQUE (subject, course, domain, competency, item_id)
+);
+
+ALTER TABLE competency_content_map OWNER TO nucleus;
+
+CREATE INDEX ccm_cw_idx ON competency_content_map USING BTREE (competency, weight DESC);
+
