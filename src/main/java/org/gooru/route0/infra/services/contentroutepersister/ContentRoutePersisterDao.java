@@ -15,10 +15,11 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 interface ContentRoutePersisterDao {
 
     @GetGeneratedKeys
-    @SqlUpdate("insert into user_route0_content(user_id, class_id, course_id, status, route0_content) values (:userId, "
-                   + " :classId, :courseId, :status, :route0Content::jsonb)")
+    @SqlUpdate("insert into user_route0_content(user_id, class_id, course_id, status, route0_content, "
+                   + " user_competency_route) values (:userId, :classId, :courseId, :status, :route0Content::jsonb, "
+                   + " :userCompetencyRoute::jsonb)")
     long persistRoute0Content(@BindBean ContentRouteInfo info, @Bind("status") String status,
-        @Bind("route0Content") String route0Content);
+        @Bind("route0Content") String route0Content, @Bind("userCompetencyRoute") String userCompetencyRoute);
 
     @SqlBatch("insert into user_route0_content_detail (user_route0_content_id, unit_id, unit_title, unit_sequence, "
                   + " lesson_id, lesson_title, lesson_sequence, collection_id, collection_type, collection_sequence, "

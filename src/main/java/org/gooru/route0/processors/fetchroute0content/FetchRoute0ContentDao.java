@@ -10,14 +10,14 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 interface FetchRoute0ContentDao {
 
     @Mapper(FetchRoute0ContentResponse.FetchRoute0ContentResponseMapper.class)
-    @SqlQuery("select status, route0_content from user_route0_content where user_id = :userId and course_id = "
-                  + ":courseId  and class_id = :classId")
+    @SqlQuery("select status, route0_content, user_competency_route from user_route0_content where user_id = :userId "
+                  + " and course_id = :courseId  and class_id = :classId")
     FetchRoute0ContentResponse fetchRoute0ContentForUserInClass(
         @BindBean FetchRoute0ContentCommand.FetchRoute0ContentCommandBean bean);
 
     @Mapper(FetchRoute0ContentResponse.FetchRoute0ContentResponseMapper.class)
-    @SqlQuery("select status, route0_content from user_route0_content where user_id = :userId and course_id = "
-                  + ":courseId  and class_id is null")
+    @SqlQuery("select status, route0_content, user_competency_route from user_route0_content where user_id = :userId "
+                  + " and course_id = :courseId  and class_id is null")
     FetchRoute0ContentResponse fetchRoute0ContentForUserInIL(
         @BindBean FetchRoute0ContentCommand.FetchRoute0ContentCommandBean bean);
 

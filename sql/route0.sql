@@ -8,6 +8,7 @@ create table user_route0_content (
     class_id uuid,
     status text NOT NULL DEFAULT 'pending' CHECK (status::text = ANY(ARRAY['pending'::text, 'accepted'::text, 'rejected'::text, 'na'::text])),
     route0_content jsonb NOT NULL,
+    user_competency_route jsonb NOT NULL,
     created_at timestamp without time zone DEFAULT timezone('UTC'::text, now()) NOT NULL,
     CONSTRAINT ur0c_pkey PRIMARY KEY (id)
 );

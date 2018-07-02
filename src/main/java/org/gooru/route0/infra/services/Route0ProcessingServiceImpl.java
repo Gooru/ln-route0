@@ -62,7 +62,7 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
 
             ContentRoutePersister persister = ContentRoutePersister.builder();
             ContentRouteInfo info = createContentRouteInfo();
-            persister.persist(info, contentRouteModel);
+            persister.persist(info, contentRouteModel, competencyRouteModel);
 
         } catch (Exception e) {
             LOGGER.warn("Not able to calculate route0 for model: '{}'. Will dequeue record.", e);

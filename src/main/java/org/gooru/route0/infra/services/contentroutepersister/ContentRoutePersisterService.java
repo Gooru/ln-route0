@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.gooru.route0.infra.data.Route0StatusValues;
 import org.gooru.route0.infra.data.UserRoute0ContentDetailModel;
+import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteModel;
 import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.ContentRouteModel;
 import org.skife.jdbi.v2.DBI;
 
@@ -19,15 +20,18 @@ class ContentRoutePersisterService implements ContentRoutePersister {
     private long contentRouteId;
     private ContentRouteInfo info;
     private ContentRouteModel model;
+    private CompetencyRouteModel competencyRouteModel;
+    private static String emptyJson = new JsonObject().toString();
 
     ContentRoutePersisterService(DBI dbi) {
         this.dbi = dbi;
     }
 
     @Override
-    public void persist(ContentRouteInfo info, ContentRouteModel model) {
+    public void persist(ContentRouteInfo info, ContentRouteModel model, CompetencyRouteModel competencyRouteModel) {
         this.info = info;
         this.model = model;
+        this.competencyRouteModel = competencyRouteModel;
 
         persistRouteInfo();
         persistRouteDetails();
@@ -42,11 +46,12 @@ class ContentRoutePersisterService implements ContentRoutePersister {
     private void persistRouteInfo() {
         JsonObject route0Content = model.toJson();
         if (route0Content.isEmpty()) {
-            contentRouteId = getPersisterDao()
-                .persistRoute0Content(info, Route0StatusValues.getStatusNa(), model.toJson().toString());
+            contentRouteId =
+                getPersisterDao().persistRoute0Content(info, Route0StatusValues.getStatusNa(), emptyJson, emptyJson);
         } else {
             contentRouteId = getPersisterDao()
-                .persistRoute0Content(info, Route0StatusValues.getStatusPending(), model.toJson().toString());
+                .persistRoute0Content(info, Route0StatusValues.getStatusPending(), route0Content.toString(),
+                    competencyRouteModel.toJson().toString());
         }
     }
 
