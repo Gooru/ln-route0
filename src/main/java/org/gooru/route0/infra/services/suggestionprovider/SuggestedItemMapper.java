@@ -24,7 +24,7 @@ public class SuggestedItemMapper implements ResultSetMapper<SuggestedItem> {
 
     private static class MapperFields {
         private static final String TX_COMPETENCY = "competency";
-        private static final String TX_CONTENT_TYPE= "content_type";
+        private static final String TX_CONTENT_TYPE = "content_type";
         private static final String TX_ITEM = "item_id";
     }
 }

@@ -41,6 +41,15 @@
       "config": {
       }
     },
+    "org.gooru.route0.bootstrap.verticles.PostProcessingVerticle": {
+      "instances": 1,
+      "worker": false,
+      "config": {
+        "lpbaseline.uri": "",
+        "http.timeout": 60000,
+        "http.poolSize": 20
+      }
+    },
     "org.gooru.route0.bootstrap.verticles.Route0ProcessingVerticle": {
       "instances": 1,
       "worker": false,

@@ -10,6 +10,8 @@ import org.gooru.route0.infra.data.competency.CompetencyCode;
 public interface SuggestedItem {
 
     CompetencyCode getCompetencyCode();
+
     UUID getItemId();
+
     ItemType getItemType();
 }

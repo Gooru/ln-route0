@@ -5,11 +5,13 @@ import org.gooru.route0.processors.calculatecompetencycontentroute.CalculateComp
 import org.gooru.route0.processors.calculatecompetencyroute.CalculateCompetencyRouteProcessor;
 import org.gooru.route0.processors.doroute0ofcontent.DoRoute0OfContentProcessor;
 import org.gooru.route0.processors.fetchroute0content.FetchRoute0ContentProcessor;
+import org.gooru.route0.processors.learnerprofilebaselineprocessor.LearnerProfileBaselineProcessor;
 import org.gooru.route0.responses.MessageResponse;
 
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.Message;
+import io.vertx.core.http.HttpClient;
 import io.vertx.core.json.JsonObject;
 
 /**
@@ -46,4 +48,8 @@ public final class ProcessorBuilder {
         return new CalculateCompetencyContentRouteProcessor(vertx, message);
     }
 
+    public static AsyncMessageProcessor buildLPBaselineProcessor(Vertx vertx, Message<JsonObject> message,
+        HttpClient client, String lpbaselineUri) {
+        return new LearnerProfileBaselineProcessor(vertx, message, client, lpbaselineUri);
+    }
 }

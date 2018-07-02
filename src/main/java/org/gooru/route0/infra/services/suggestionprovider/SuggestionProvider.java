@@ -10,7 +10,7 @@ import org.skife.jdbi.v2.DBI;
 
 /**
  * Fetch the suggestions from competency_content_map, personalized for specified user for all specified competencies.
- *
+ * <p>
  * With current implementation, no personalization is applied though weight is used for ordering. The list should
  * contain one collection and one assessment for each competency at most, in that order.
  *

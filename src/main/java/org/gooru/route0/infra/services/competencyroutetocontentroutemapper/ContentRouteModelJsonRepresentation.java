@@ -16,7 +16,6 @@ class ContentRouteModelJsonRepresentation {
         this.units = units;
     }
 
-
     static class UnitModelJsonRepresentation {
         private String unitId;
         private String unitTitle;

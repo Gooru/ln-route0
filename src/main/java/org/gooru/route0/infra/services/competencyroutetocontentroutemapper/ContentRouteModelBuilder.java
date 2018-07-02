@@ -12,7 +12,6 @@ import org.gooru.route0.infra.data.competency.DomainModel;
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteModel;
 import org.gooru.route0.infra.services.suggestionprovider.SuggestedItem;
 import org.gooru.route0.infra.services.suggestionprovider.SuggestionProvider;
-import org.skife.jdbi.v2.DBI;
 
 /**
  * @author ashish.

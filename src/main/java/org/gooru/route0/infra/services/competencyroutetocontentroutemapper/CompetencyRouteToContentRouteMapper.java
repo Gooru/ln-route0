@@ -21,6 +21,4 @@ public interface CompetencyRouteToContentRouteMapper {
         return new CompetencyRouteToContentRouteMapperService(dbi);
     }
 
-
-
 }
