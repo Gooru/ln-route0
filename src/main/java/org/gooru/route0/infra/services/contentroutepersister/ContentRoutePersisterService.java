@@ -31,7 +31,6 @@ class ContentRoutePersisterService implements ContentRoutePersister {
 
         persistRouteInfo();
         persistRouteDetails();
-        // TODO: Do transformation and update the details
     }
 
     private void persistRouteDetails() {
