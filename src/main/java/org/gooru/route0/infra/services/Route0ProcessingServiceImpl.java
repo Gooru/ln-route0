@@ -1,6 +1,13 @@
 package org.gooru.route0.infra.services;
 
 import org.gooru.route0.infra.data.Route0QueueModel;
+import org.gooru.route0.infra.data.RouteCalculatorModel;
+import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteCalculator;
+import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteModel;
+import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.CompetencyRouteToContentRouteMapper;
+import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.ContentRouteModel;
+import org.gooru.route0.infra.services.contentroutepersister.ContentRouteInfo;
+import org.gooru.route0.infra.services.contentroutepersister.ContentRoutePersister;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,18 +52,29 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
     private void processRecord() {
         LOGGER.debug("Doing real processing");
         try {
-            // TODO : Provide implementation
-            String result = "TODO: get real result";
-            ObjectMapper mapper = new ObjectMapper();
-            try {
-                String route0ContentString = mapper.writeValueAsString(result);
-            } catch (JsonProcessingException e) {
-                LOGGER.warn("Not able to convert route0 items to JSON for model '{}'", model.toJson(), e);
-            }
+
+            CompetencyRouteCalculator competencyRouteCalculator = CompetencyRouteCalculator.build();
+            CompetencyRouteModel competencyRouteModel =
+                competencyRouteCalculator.calculateCompetencyRoute(RouteCalculatorModel.fromRoute0QueueModel(model));
+            // TODO: Persist competencyRoute here as new requirement
+
+            CompetencyRouteToContentRouteMapper competencyRouteToContentRouteMapper =
+                CompetencyRouteToContentRouteMapper.build();
+            ContentRouteModel contentRouteModel = competencyRouteToContentRouteMapper
+                .calculateContentRouteForCompetencyRoute(model.getUserId(), competencyRouteModel);
+
+            ContentRoutePersister persister = ContentRoutePersister.builder();
+            ContentRouteInfo info = createContentRouteInfo();
+            persister.persist(info, contentRouteModel);
+
         } catch (Exception e) {
             LOGGER.warn("Not able to calculate route0 for model: '{}'. Will dequeue record.", e);
         }
         dequeueRecord();
+    }
+
+    private ContentRouteInfo createContentRouteInfo() {
+        return new ContentRouteInfo(model.getUserId(), model.getCourseId(), model.getClassId());
     }
 
     private boolean route0WasAlreadyDone() {

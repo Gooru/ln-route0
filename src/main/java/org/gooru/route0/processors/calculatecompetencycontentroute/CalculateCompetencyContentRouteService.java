@@ -2,6 +2,8 @@ package org.gooru.route0.processors.calculatecompetencycontentroute;
 
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteCalculator;
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteModel;
+import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.CompetencyRouteToContentRouteMapper;
+import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.ContentRouteModel;
 import org.skife.jdbi.v2.DBI;
 
 import io.vertx.core.json.JsonObject;
@@ -21,10 +23,12 @@ class CalculateCompetencyContentRouteService {
     }
 
     JsonObject calculateCompetencyRoute(CalculateCompetencyContentRouteCommand command) {
-        CompetencyRouteCalculator competencyRouteCalculator = CompetencyRouteCalculator.build();
         CompetencyRouteModel competencyRouteModel =
-            competencyRouteCalculator.calculateCompetencyRoute(command.asRouteCalculatorModel());
-        // TODO: Now that we have competency model, we need to map it to Content Model
-        return competencyRouteModel.toJson();
+            CompetencyRouteCalculator.build().calculateCompetencyRoute(command.asRouteCalculatorModel());
+
+        ContentRouteModel contentRouteModel = CompetencyRouteToContentRouteMapper.build()
+            .calculateContentRouteForCompetencyRoute(command.getUserId(), competencyRouteModel);
+
+        return contentRouteModel.toJson();
     }
 }
