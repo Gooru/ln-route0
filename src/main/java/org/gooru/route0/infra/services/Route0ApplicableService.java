@@ -2,7 +2,10 @@ package org.gooru.route0.infra.services;
 
 import java.util.UUID;
 
+import org.gooru.route0.infra.components.AppConfiguration;
 import org.gooru.route0.infra.jdbi.DBICreator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.vertx.core.json.JsonObject;
 
@@ -11,21 +14,23 @@ import io.vertx.core.json.JsonObject;
  */
 public final class Route0ApplicableService {
 
-    private static final String ROUTE0_SETTING_KEY = "route0";
+    private static final Logger LOGGER = LoggerFactory.getLogger(Route0ApplicableService.class);
 
     public static boolean isRoute0ApplicableToClass(UUID classId) {
         Route0ApplicableDao dao = getRoute0ApplicableDao();
-        String setting = dao.fetchClassSetting(classId);
-        if (setting == null) {
-            throw new IllegalStateException("Class setting should not be null");
+        String courseId = dao.fetchCourseForClass(classId);
+        if (courseId == null) {
+            LOGGER.info("Course is not assigned to class '{}' hence route0 not applicable", classId.toString());
+            return false;
         }
-        JsonObject jsonSetting = new JsonObject(setting);
-        return Boolean.TRUE.equals(jsonSetting.getBoolean(ROUTE0_SETTING_KEY));
+        return AppConfiguration.getInstance().getRoute0ApplicableCourseVersion()
+            .equals(dao.fetchCourseVersion(courseId));
     }
 
     public static boolean isRoute0ApplicableToCourseInIL(UUID courseId) {
         Route0ApplicableDao dao = getRoute0ApplicableDao();
-        return (dao.fetchCourseVersion(courseId) != null);
+        return AppConfiguration.getInstance().getRoute0ApplicableCourseVersion()
+            .equals(dao.fetchCourseVersion(courseId));
     }
 
     private static Route0ApplicableDao getRoute0ApplicableDao() {
