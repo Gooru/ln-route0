@@ -20,7 +20,7 @@ import io.vertx.core.json.JsonObject;
  * @author ashish.
  */
 public class PostProcessingVerticle extends AbstractVerticle {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Route0ProcessingVerticle.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostProcessingVerticle.class);
     private HttpClient client;
     private String lpbaselineUri;
 
@@ -45,7 +45,6 @@ public class PostProcessingVerticle extends AbstractVerticle {
     private void processMessage(Message<JsonObject> message) {
         String op = message.headers().get(Constants.Message.MSG_OP);
         Future<MessageResponse> future;
-        boolean replyNeeded = true;
         switch (op) {
         case Constants.Message.MSG_OP_ROUTE0_LP_BASELINE:
             future = ProcessorBuilder.buildLPBaselineProcessor(vertx, message, client, lpbaselineUri).process();
