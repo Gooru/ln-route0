@@ -1,21 +1,24 @@
 {
-	"id": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
+	"id": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
 	"name": "Route0",
 	"description": "",
 	"order": [
-		"2e165fab-3980-6d4f-8ff7-144bc0687dea",
-		"1a2844e7-3d66-fac6-61e9-c2fdf0ba6a6b",
-		"1c6b8c88-dd21-fd97-feb6-10c4c9d94fa2",
-		"eaea2902-84e3-bf69-9193-c7235ee1df77",
-		"8b07d8d1-1c97-94ec-14e5-b8d6579017c4",
-		"b7846df7-7165-bc26-d19a-55e52d8bd8c4",
-		"0fbd59bd-ad74-18d4-92b6-5faeba90bdba",
-		"39b51e0a-8306-7575-f0a7-d6622840db1b",
-		"7282c7fb-da39-7782-3cc0-de2440cab1a6"
+		"3bae9666-6bb1-d0c5-b742-c522895bfb5b",
+		"fccf002a-b00d-9cfb-1ff7-be7b7311adf7",
+		"341f4028-e2ab-4d93-05f9-067ecbf4a3fc",
+		"d7f9cc6a-8be9-8b58-0227-29c53ae16003",
+		"41019a6d-18e8-ef98-3c9e-eb18fcca7490",
+		"651984cb-a707-4af4-db55-172b34454d59",
+		"1f3de78d-58a1-cb6f-7a2f-3e66163821dc",
+		"c0617828-fd52-a00e-9048-f2ba56e1efc8",
+		"15adfcae-ef69-0094-0cdd-d7651c961bda",
+		"436fa6da-2c04-c059-2f13-e50494a20bfa",
+		"d27dc8ee-9a6e-b73a-0c92-04df7c48dd80",
+		"66cfefc6-5dfd-c8ed-4404-2590d52adcf6"
 	],
 	"folders": [],
 	"folders_order": [],
-	"timestamp": 1526394006586,
+	"timestamp": 1529925872664,
 	"owner": 0,
 	"public": false,
 	"events": [],
@@ -23,7 +26,7 @@
 	"auth": null,
 	"requests": [
 		{
-			"id": "0fbd59bd-ad74-18d4-92b6-5faeba90bdba",
+			"id": "15adfcae-ef69-0094-0cdd-d7651c961bda",
 			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
 			"headerData": [
 				{
@@ -48,22 +51,22 @@
 			"data": [],
 			"dataMode": "raw",
 			"auth": null,
-			"time": 1526736118095,
-			"name": "Route0 Do route0 - Members joining class - Internal",
+			"time": 1530002402332,
+			"name": "Route0 calculate - Route0 setting changed - Internal use",
 			"description": "",
-			"collectionId": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
 			"responses": [],
 			"currentHelper": null,
 			"helperAttributes": null,
-			"rawModeData": "{\n\t\"source\": \"join.class\",\n\t\"classId\": \"0baefeb6-4f72-49b4-85fd-a20aa4f17100\",\n\t\"memberIds\": [\"53ced540-f27f-41c3-ad1e-618c8177f3d5\", \"7202486c-feeb-4fdc-978c-7c61a930dfad\"]\n}\n"
+			"rawModeData": "{\n\t\"source\": \"rescope\",\n\t\"classId\": \"0baefeb6-4f72-49b4-85fd-a20aa4f17100\"\n}\n"
 		},
 		{
-			"id": "1a2844e7-3d66-fac6-61e9-c2fdf0ba6a6b",
-			"headers": "Authorization: Token MDYwN2NmOTctNmY5ZS00N2MwLWI2MTAtMDFiMzZlMDJiNGM2OlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
+			"id": "1f3de78d-58a1-cb6f-7a2f-3e66163821dc",
+			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "Authorization",
-					"value": "Token MDYwN2NmOTctNmY5ZS00N2MwLWI2MTAtMDFiMzZlMDJiNGM2OlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
+					"value": "Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
 					"description": "",
 					"enabled": true
 				},
@@ -74,48 +77,26 @@
 					"enabled": true
 				}
 			],
-			"url": "localhost:8080/api/route0/v1/rtd?classId=0baefeb6-4f72-49b4-85fd-a20aa4f17100&courseId=c3c5a610-0c97-4ecc-852c-8586a7ba3b52&userId=68492039-3713-42de-90ad-94d5945cd482",
-			"queryParams": [
-				{
-					"key": "classId",
-					"value": "0baefeb6-4f72-49b4-85fd-a20aa4f17100",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "courseId",
-					"value": "c3c5a610-0c97-4ecc-852c-8586a7ba3b52",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "userId",
-					"value": "68492039-3713-42de-90ad-94d5945cd482",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				}
-			],
+			"url": "localhost:8080/api/route0/v1/rtd",
+			"queryParams": [],
 			"events": [],
 			"pathVariables": {},
 			"pathVariableData": [],
-			"method": "GET",
+			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
 			"auth": null,
-			"time": 1526881413785,
-			"name": "Route0 Fetch In class by Teacher",
+			"time": 1530002381222,
+			"name": "Route0 calculate - Members joining class - Internal use",
 			"description": "",
-			"collectionId": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
 			"responses": [],
 			"currentHelper": null,
 			"helperAttributes": null,
-			"rawModeData": ""
+			"rawModeData": "{\n\t\"source\": \"join.class\",\n\t\"classId\": \"0baefeb6-4f72-49b4-85fd-a20aa4f17100\",\n\t\"memberIds\": [\"53ced540-f27f-41c3-ad1e-618c8177f3d5\", \"7202486c-feeb-4fdc-978c-7c61a930dfad\"]\n}\n"
 		},
 		{
-			"id": "1c6b8c88-dd21-fd97-feb6-10c4c9d94fa2",
+			"id": "341f4028-e2ab-4d93-05f9-067ecbf4a3fc",
 			"headers": "Authorization: Token MzQ0MjA3NmUtZDZkYS00OTAwLTgxMGUtNTRhMjY0NDM5ZGJjOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
 			"headerData": [
 				{
@@ -162,17 +143,17 @@
 			"data": [],
 			"dataMode": "raw",
 			"auth": null,
-			"time": 1526881451933,
+			"time": 1530002344922,
 			"name": "Route0 Fetch In class by Collaborator",
 			"description": "",
-			"collectionId": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
 			"responses": [],
 			"currentHelper": null,
 			"helperAttributes": null,
 			"rawModeData": ""
 		},
 		{
-			"id": "2e165fab-3980-6d4f-8ff7-144bc0687dea",
+			"id": "3bae9666-6bb1-d0c5-b742-c522895bfb5b",
 			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
 			"headerData": [
 				{
@@ -212,17 +193,17 @@
 			"data": [],
 			"dataMode": "raw",
 			"auth": null,
-			"time": 1526563315652,
+			"time": 1530002320939,
 			"name": "Route0 Fetch In class",
 			"description": "",
-			"collectionId": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
 			"responses": [],
 			"currentHelper": null,
 			"helperAttributes": null,
 			"rawModeData": ""
 		},
 		{
-			"id": "39b51e0a-8306-7575-f0a7-d6622840db1b",
+			"id": "41019a6d-18e8-ef98-3c9e-eb18fcca7490",
 			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
 			"headerData": [
 				{
@@ -247,122 +228,223 @@
 			"data": [],
 			"dataMode": "raw",
 			"auth": null,
-			"time": 1526641062644,
-			"name": "Route0 Do route0 - Course Assigned to Class - Internal",
+			"time": 1530002364390,
+			"name": "Route0 calculate - OOB IL - Internal",
 			"description": "",
-			"collectionId": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
-			"responses": [],
-			"currentHelper": null,
-			"helperAttributes": null,
-			"rawModeData": "{\n\t\"source\": \"assign.course.to.class\",\n\t\"classId\": \"0baefeb6-4f72-49b4-85fd-a20aa4f17100\"\n}\n"
-		},
-		{
-			"id": "7282c7fb-da39-7782-3cc0-de2440cab1a6",
-			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Authorization",
-					"value": "Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "localhost:8080/api/route0/v1/rtd",
-			"queryParams": [],
-			"events": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"auth": null,
-			"time": 1526641092660,
-			"name": "Route0 Do route0 - Route0 setting changed - Internal",
-			"description": "",
-			"collectionId": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
-			"responses": [],
-			"currentHelper": null,
-			"helperAttributes": null,
-			"rawModeData": "{\n\t\"source\": \"route0\",\n\t\"classId\": \"0baefeb6-4f72-49b4-85fd-a20aa4f17100\"\n}\n"
-		},
-		{
-			"id": "8b07d8d1-1c97-94ec-14e5-b8d6579017c4",
-			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Authorization",
-					"value": "Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "localhost:8080/api/route0/v1/rtd",
-			"queryParams": [],
-			"events": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"auth": null,
-			"time": 1526640794590,
-			"name": "Route0 Do route0 - OOB in Class - Internal",
-			"description": "",
-			"collectionId": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
-			"responses": [],
-			"currentHelper": null,
-			"helperAttributes": null,
-			"rawModeData": "{\n\t\"source\": \"oob\",\n\t\"classId\": \"0baefeb6-4f72-49b4-85fd-a20aa4f17100\",\n\t\"courseId\": \"c3c5a610-0c97-4ecc-852c-8586a7ba3b52\",\n\t\"memberIds\": [\"68492039-3713-42de-90ad-94d5945cd482\"]\n}\n"
-		},
-		{
-			"id": "b7846df7-7165-bc26-d19a-55e52d8bd8c4",
-			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Authorization",
-					"value": "Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "localhost:8080/api/route0/v1/rtd",
-			"queryParams": [],
-			"events": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"auth": null,
-			"time": 1526640817005,
-			"name": "Route0 Do route0 - OOB IL - Internal",
-			"description": "",
-			"collectionId": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
 			"responses": [],
 			"currentHelper": null,
 			"helperAttributes": null,
 			"rawModeData": "{\n\t\"source\": \"oob\",\n\t\"classId\": null,\n\t\"courseId\": \"c3c5a610-0c97-4ecc-852c-8586a7ba3b52\",\n\t\"memberIds\": [\"68492039-3713-42de-90ad-94d5945cd482\"]\n}\n"
 		},
 		{
-			"id": "eaea2902-84e3-bf69-9193-c7235ee1df77",
+			"id": "436fa6da-2c04-c059-2f13-e50494a20bfa",
+			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/api/internal/rtd/competency?courseId=c3c5a610-0c97-4ecc-852c-8586a7ba3b52&userId=75be0d5c-da0d-4ad8-afde-d052ae1f19ba",
+			"queryParams": [
+				{
+					"key": "courseId",
+					"value": "c3c5a610-0c97-4ecc-852c-8586a7ba3b52",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "userId",
+					"value": "75be0d5c-da0d-4ad8-afde-d052ae1f19ba",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"auth": null,
+			"time": 1529931017284,
+			"name": "Route0 Calculate competency Route  - Internal",
+			"description": "",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"source\": \"oob\",\n\t\"classId\": null,\n\t\"courseId\": \"c3c5a610-0c97-4ecc-852c-8586a7ba3b52\",\n\t\"memberIds\": [\"68492039-3713-42de-90ad-94d5945cd482\"]\n}\n"
+		},
+		{
+			"id": "651984cb-a707-4af4-db55-172b34454d59",
+			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/api/route0/v1/rtd",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"auth": null,
+			"time": 1530002356200,
+			"name": "Route0 calculate - OOB in Class - Internal use",
+			"description": "",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"source\": \"oob\",\n\t\"classId\": \"0baefeb6-4f72-49b4-85fd-a20aa4f17100\",\n\t\"courseId\": \"c3c5a610-0c97-4ecc-852c-8586a7ba3b52\",\n\t\"memberIds\": [\"68492039-3713-42de-90ad-94d5945cd482\"]\n}\n"
+		},
+		{
+			"id": "66cfefc6-5dfd-c8ed-4404-2590d52adcf6",
+			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/api/route0/v1/rtd/status",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"auth": null,
+			"time": 1530105796822,
+			"name": "Route0 Status - User Acceptance",
+			"description": "",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"courseId\": \"c3c5a610-0c97-4ecc-852c-8586a7ba3b52\",\n\t\"classId\": \"0baefeb6-4f72-49b4-85fd-a20aa4f17100\",\n\t\"status\": \"rejected\"\n}\n"
+		},
+		{
+			"id": "c0617828-fd52-a00e-9048-f2ba56e1efc8",
+			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/api/route0/v1/rtd",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"auth": null,
+			"time": 1530002390562,
+			"name": "Route0 calculate - Course Assigned to Class - Internal use",
+			"description": "",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"source\": \"assign.course.to.class\",\n\t\"classId\": \"0baefeb6-4f72-49b4-85fd-a20aa4f17100\"\n}\n"
+		},
+		{
+			"id": "d27dc8ee-9a6e-b73a-0c92-04df7c48dd80",
+			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/api/internal/rtd/competency?courseId=c3c5a610-0c97-4ecc-852c-8586a7ba3b52&userId=75be0d5c-da0d-4ad8-afde-d052ae1f19ba",
+			"queryParams": [
+				{
+					"key": "courseId",
+					"value": "c3c5a610-0c97-4ecc-852c-8586a7ba3b52",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "userId",
+					"value": "75be0d5c-da0d-4ad8-afde-d052ae1f19ba",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"auth": null,
+			"time": 1529931017284,
+			"name": "Route0 Calculate competency-content Route  - Internal",
+			"description": "",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
+			"responses": [],
+			"isFromCollection": true,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"source\": \"oob\",\n\t\"classId\": null,\n\t\"courseId\": \"c3c5a610-0c97-4ecc-852c-8586a7ba3b52\",\n\t\"memberIds\": [\"68492039-3713-42de-90ad-94d5945cd482\"]\n}\n"
+		},
+		{
+			"id": "d7f9cc6a-8be9-8b58-0227-29c53ae16003",
 			"headers": "Authorization: Token Njg0OTIwMzktMzcxMy00MmRlLTkwYWQtOTRkNTk0NWNkNDgyOlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
 			"headerData": [
 				{
@@ -402,10 +484,67 @@
 			"data": [],
 			"dataMode": "raw",
 			"auth": null,
-			"time": 1526562527299,
+			"time": 1530002071384,
 			"name": "Route0 Fetch In IL",
 			"description": "",
-			"collectionId": "97f13cf2-3228-d977-bb23-948d14eb3a9b",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "fccf002a-b00d-9cfb-1ff7-be7b7311adf7",
+			"headers": "Authorization: Token MDYwN2NmOTctNmY5ZS00N2MwLWI2MTAtMDFiMzZlMDJiNGM2OlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Token MDYwN2NmOTctNmY5ZS00N2MwLWI2MTAtMDFiMzZlMDJiNGM2OlR1ZSBGZWIgMTYgMDQ6NTI6MTUgVVRDIDIwMTY6MTQ1NTU5ODMzNTExNQ==",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/api/route0/v1/rtd?classId=0baefeb6-4f72-49b4-85fd-a20aa4f17100&courseId=c3c5a610-0c97-4ecc-852c-8586a7ba3b52&userId=68492039-3713-42de-90ad-94d5945cd482",
+			"queryParams": [
+				{
+					"key": "classId",
+					"value": "0baefeb6-4f72-49b4-85fd-a20aa4f17100",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "courseId",
+					"value": "c3c5a610-0c97-4ecc-852c-8586a7ba3b52",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "userId",
+					"value": "68492039-3713-42de-90ad-94d5945cd482",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"auth": null,
+			"time": 1530002335806,
+			"name": "Route0 Fetch In class by Teacher",
+			"description": "",
+			"collectionId": "578031bb-7bd5-e2bd-9d2f-f858b5bc986d",
 			"responses": [],
 			"currentHelper": null,
 			"helperAttributes": null,
