@@ -44,8 +44,8 @@ class CompetencyRouteCalculatorService implements CompetencyRouteCalculator {
         } catch (RuntimeException re) {
             LOGGER.warn("Not able to compute route for class: '{}', course: '{}' and user: '{}'", model.getCourseId(),
                 model.getClassId(), model.getUserId());
+            throw re;
         }
-        return null;
     }
 
     private CompetencyRouteModel doProcess() {

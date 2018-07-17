@@ -58,6 +58,7 @@ public class FetchRoute0ContentResponse {
             FetchRoute0ContentResponse response = new FetchRoute0ContentResponse();
             response.setStatus(r.getString(MapperFields.STATUS));
             response.setRoute0Content(r.getString(MapperFields.ROUTE0_CONTENT));
+            response.setUserCompetencyRoute(r.getString(MapperFields.USER_COMPETENCY_ROUTE));
             return response;
         }
     }
