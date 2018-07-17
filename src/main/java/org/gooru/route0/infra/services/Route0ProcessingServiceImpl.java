@@ -53,7 +53,6 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
             CompetencyRouteCalculator competencyRouteCalculator = CompetencyRouteCalculator.build();
             CompetencyRouteModel competencyRouteModel =
                 competencyRouteCalculator.calculateCompetencyRoute(RouteCalculatorModel.fromRoute0QueueModel(model));
-            // TODO: Persist competencyRoute here as new requirement
 
             CompetencyRouteToContentRouteMapper competencyRouteToContentRouteMapper =
                 CompetencyRouteToContentRouteMapper.build();
@@ -66,8 +65,10 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
 
         } catch (Exception e) {
             LOGGER.warn("Not able to calculate route0 for model: '{}'. Will dequeue record.", e);
+            throw e;
+        } finally {
+            dequeueRecord();
         }
-        dequeueRecord();
     }
 
     private ContentRouteInfo createContentRouteInfo() {

@@ -39,21 +39,27 @@ class ContentRouteModelBuilder {
     }
 
     private void populateCollectionAssessmentData() {
-        for (UnitModel unitModel : unitModels) {
-            List<LessonModel> lessonModels = unitModelToLessonModelsMap.get(unitModel);
-            for (LessonModel lessonModel : lessonModels) {
-                CompetencyModel competencyModel = lessonModelCompetencyModelMap.get(lessonModel);
-                List<SuggestedItem> suggestedItems =
-                    competencyCodeToSuggestionsListMap.get(competencyModel.getCompetencyCode());
-                int i = 0;
-                List<CollectionModel> collectionModels = new ArrayList<>();
-                for (SuggestedItem suggestedItem : suggestedItems) {
-                    CollectionModel collectionModel = new CollectionModel(ModelIdGenerator.generateId(), null, ++i,
-                        CollectionModel.CollectionModelType.builder(suggestedItem.getItemType().getName()));
-                    collectionModels.add(collectionModel);
+        try {
+            for (UnitModel unitModel : unitModels) {
+                List<LessonModel> lessonModels = unitModelToLessonModelsMap.get(unitModel);
+                for (LessonModel lessonModel : lessonModels) {
+                    CompetencyModel competencyModel = lessonModelCompetencyModelMap.get(lessonModel);
+                    List<SuggestedItem> suggestedItems =
+                        competencyCodeToSuggestionsListMap.get(competencyModel.getCompetencyCode());
+                    int i = 0;
+                    List<CollectionModel> collectionModels = new ArrayList<>();
+                    if (suggestedItems != null) {
+                        for (SuggestedItem suggestedItem : suggestedItems) {
+                            CollectionModel collectionModel = new CollectionModel(ModelIdGenerator.generateId(), null, ++i,
+                                CollectionModel.CollectionModelType.builder(suggestedItem.getItemType().getName()));
+                            collectionModels.add(collectionModel);
+                        }
+                    }
+                    lessonModelToCollectionModelsMap.put(lessonModel, collectionModels);
                 }
-                lessonModelToCollectionModelsMap.put(lessonModel, collectionModels);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
