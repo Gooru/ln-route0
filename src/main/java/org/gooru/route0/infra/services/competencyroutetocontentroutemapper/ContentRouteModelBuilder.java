@@ -9,6 +9,8 @@ import java.util.UUID;
 import org.gooru.route0.infra.data.competency.CompetencyCode;
 import org.gooru.route0.infra.data.competency.CompetencyModel;
 import org.gooru.route0.infra.data.competency.DomainModel;
+import org.gooru.route0.infra.services.ContentFetcherService;
+import org.gooru.route0.infra.services.ContentFetcherServiceBuilder;
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteModel;
 import org.gooru.route0.infra.services.suggestionprovider.SuggestedItem;
 import org.gooru.route0.infra.services.suggestionprovider.SuggestionProvider;
@@ -27,6 +29,8 @@ class ContentRouteModelBuilder {
     private CompetencyRouteModel competencyRouteModel;
     private List<CompetencyCode> competencyCodesCovered = new ArrayList<>();
     private Map<CompetencyCode, List<SuggestedItem>> competencyCodeToSuggestionsListMap;
+    private List<UUID> allSuggestedItems = new ArrayList<>();
+    private Map<String, String> collectionIdTitleMap = new HashMap<>();
 
     ContentRouteModel build(UUID userId, CompetencyRouteModel competencyRouteModel) {
 
@@ -39,32 +43,47 @@ class ContentRouteModelBuilder {
     }
 
     private void populateCollectionAssessmentData() {
-        try {
-            for (UnitModel unitModel : unitModels) {
-                List<LessonModel> lessonModels = unitModelToLessonModelsMap.get(unitModel);
-                for (LessonModel lessonModel : lessonModels) {
-                    CompetencyModel competencyModel = lessonModelCompetencyModelMap.get(lessonModel);
-                    List<SuggestedItem> suggestedItems =
-                        competencyCodeToSuggestionsListMap.get(competencyModel.getCompetencyCode());
-                    int i = 0;
-                    List<CollectionModel> collectionModels = new ArrayList<>();
-                    if (suggestedItems != null) {
-                        for (SuggestedItem suggestedItem : suggestedItems) {
-                            CollectionModel collectionModel = new CollectionModel(ModelIdGenerator.generateId(), null, ++i,
-                                CollectionModel.CollectionModelType.builder(suggestedItem.getItemType().getName()));
-                            collectionModels.add(collectionModel);
-                        }
+        for (UnitModel unitModel : unitModels) {
+            List<LessonModel> lessonModels = unitModelToLessonModelsMap.get(unitModel);
+            for (LessonModel lessonModel : lessonModels) {
+                CompetencyModel competencyModel = lessonModelCompetencyModelMap.get(lessonModel);
+                List<SuggestedItem> suggestedItems =
+                    competencyCodeToSuggestionsListMap.get(competencyModel.getCompetencyCode());
+                int i = 0;
+                List<CollectionModel> collectionModels = new ArrayList<>();
+                if (suggestedItems != null) {
+                    for (SuggestedItem suggestedItem : suggestedItems) {
+                        CollectionModel collectionModel = new CollectionModel(suggestedItem.getItemId(),
+                            collectionIdTitleMap.get(suggestedItem.getItemId().toString()), ++i,
+                            CollectionModel.CollectionModelType.builder(suggestedItem.getItemType().getName()));
+                        collectionModels.add(collectionModel);
                     }
-                    lessonModelToCollectionModelsMap.put(lessonModel, collectionModels);
                 }
+                lessonModelToCollectionModelsMap.put(lessonModel, collectionModels);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
     private void fetchSuggestionsForCompetencies() {
         competencyCodeToSuggestionsListMap = SuggestionProvider.build().suggest(userId, competencyCodesCovered);
+        fetchTitlesForSuggestions();
+    }
+
+    private void fetchTitlesForSuggestions() {
+        accumulateAllSuggestedItemIds();
+        ContentFetcherService contentFetcherService = ContentFetcherServiceBuilder.build();
+        collectionIdTitleMap = contentFetcherService.fetchCollectionIdTitleMap(allSuggestedItems);
+
+    }
+
+    private void accumulateAllSuggestedItemIds() {
+        for (Map.Entry<CompetencyCode, List<SuggestedItem>> entry : competencyCodeToSuggestionsListMap.entrySet()) {
+            if (entry.getValue() != null && !entry.getValue().isEmpty()) {
+                for (SuggestedItem suggestedItem : entry.getValue()) {
+                    allSuggestedItems.add(suggestedItem.getItemId());
+                }
+            }
+        }
     }
 
     private void createUnitLessonData() {

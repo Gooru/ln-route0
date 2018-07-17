@@ -97,6 +97,7 @@ class ContentRouteModelJsonRepresentation {
     static class CollectionModelJsonRepresentation {
         private String collectionId;
         private String collectionType;
+        private String title;
         private int collectionSequence;
 
         public String getCollectionId() {
@@ -113,6 +114,14 @@ class ContentRouteModelJsonRepresentation {
 
         public void setCollectionType(String collectionType) {
             this.collectionType = collectionType;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
         }
 
         public int getCollectionSequence() {
