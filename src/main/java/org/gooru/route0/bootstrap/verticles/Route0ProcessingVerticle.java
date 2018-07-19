@@ -1,5 +1,7 @@
 package org.gooru.route0.bootstrap.verticles;
 
+import static org.gooru.route0.infra.constants.Constants.Message.MSG_OP_ROUTE0_LP_BASELINE;
+
 import org.gooru.route0.infra.constants.Constants;
 import org.gooru.route0.infra.data.Route0QueueModel;
 import org.gooru.route0.infra.services.Route0ProcessingService;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
+import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.JsonObject;
@@ -47,25 +50,27 @@ public class Route0ProcessingVerticle extends AbstractVerticle {
                 sendMessageToPostProcessor(model);
                 future.complete();
             } catch (Exception e) {
-                LOGGER.warn("Not able to do route0 for the model. '{}'", message.body());
+                LOGGER.warn("Not able to do route0 for the model. '{}'", message.body(), e);
                 future.fail(e);
             }
         }, asyncResult -> {
             if (asyncResult.succeeded()) {
                 message.reply(SUCCESS);
             } else {
-                LOGGER.warn("Route0 not done for model: '{}'", message.body());
+                LOGGER.warn("Route0 not done for model: '{}'", message.body(), asyncResult.cause());
                 message.reply(FAIL);
             }
         });
     }
 
     private void sendMessageToPostProcessor(Route0QueueModel model) {
-        JsonObject request = new JsonObject().put(LearnerProfileBaselinePayloadConstants.USER_ID, model.getUserId())
-            .put(LearnerProfileBaselinePayloadConstants.COURSE_ID, model.getCourseId())
-            .put(LearnerProfileBaselinePayloadConstants.CLASS_ID, model.getClassId());
+        JsonObject request =
+            new JsonObject().put(LearnerProfileBaselinePayloadConstants.USER_ID, model.getUserId().toString())
+                .put(LearnerProfileBaselinePayloadConstants.COURSE_ID, model.getCourseId().toString())
+                .put(LearnerProfileBaselinePayloadConstants.CLASS_ID, model.getClassId().toString());
 
-        vertx.eventBus().send(Constants.EventBus.MBEP_ROUTE0_POST_PROCESSOR, request);
+        vertx.eventBus().send(Constants.EventBus.MBEP_ROUTE0_POST_PROCESSOR, request,
+            new DeliveryOptions().addHeader(Constants.Message.MSG_OP, MSG_OP_ROUTE0_LP_BASELINE));
     }
 
     @Override

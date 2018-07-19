@@ -68,7 +68,8 @@
     }
   },
   "app.configuration": {
-    "context.mbus.timeout.seconds": 60
+    "context.mbus.timeout.seconds": 60,
+    "route0.applicable.course.version": "premium"
   },
   "vertxOptions": {
     "workerPoolSize": 40,

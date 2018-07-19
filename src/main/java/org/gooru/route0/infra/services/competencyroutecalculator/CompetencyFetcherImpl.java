@@ -21,9 +21,8 @@ class CompetencyFetcherImpl implements CompetencyFetcher {
     @Override
     public List<String> fetchCompetenciesForCourse(UUID courseId) {
         if (courseId != null) {
-            List<List<String>> listOfListOfComps = getCompetencyFetcherDao().findCompetenciesForCourse(courseId);
-            return (listOfListOfComps != null && !listOfListOfComps.isEmpty()) ? listOfListOfComps.get(0) :
-                Collections.emptyList();
+            List<String> competencies = getCompetencyFetcherDao().findCompetenciesForCourse(courseId);
+            return (competencies != null && !competencies.isEmpty()) ? competencies : Collections.emptyList();
         }
         return Collections.emptyList();
     }
