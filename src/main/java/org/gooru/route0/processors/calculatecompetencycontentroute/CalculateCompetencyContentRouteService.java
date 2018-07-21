@@ -29,6 +29,9 @@ class CalculateCompetencyContentRouteService {
         ContentRouteModel contentRouteModel = CompetencyRouteToContentRouteMapper.build()
             .calculateContentRouteForCompetencyRoute(command.getUserId(), competencyRouteModel);
 
+        if (contentRouteModel.getUnitsOrdered() == null || contentRouteModel.getUnitsOrdered().isEmpty()) {
+            return new JsonObject();
+        }
         return contentRouteModel.toJson();
     }
 }

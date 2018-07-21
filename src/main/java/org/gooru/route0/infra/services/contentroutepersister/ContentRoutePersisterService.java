@@ -22,6 +22,7 @@ class ContentRoutePersisterService implements ContentRoutePersister {
     private ContentRouteModel model;
     private CompetencyRouteModel competencyRouteModel;
     private static String emptyJson = new JsonObject().toString();
+    private List<UserRoute0ContentDetailModel> detailModels;
 
     ContentRoutePersisterService(DBI dbi) {
         this.dbi = dbi;
@@ -33,19 +34,22 @@ class ContentRoutePersisterService implements ContentRoutePersister {
         this.model = model;
         this.competencyRouteModel = competencyRouteModel;
 
+        createRouteDetails();
         persistRouteInfo();
         persistRouteDetails();
     }
 
     private void persistRouteDetails() {
-        List<UserRoute0ContentDetailModel> detailModels =
-            new UserRoute0ContentDetailModelsBuilder().build(model, contentRouteId);
         getPersisterDao().persistRoute0ContentDetails(detailModels);
+    }
+
+    private void createRouteDetails() {
+        detailModels = new UserRoute0ContentDetailModelsBuilder().build(model, contentRouteId);
     }
 
     private void persistRouteInfo() {
         JsonObject route0Content = model.toJson();
-        if (route0Content.isEmpty()) {
+        if (isRoute0Empty(route0Content)) {
             contentRouteId =
                 getPersisterDao().persistRoute0Content(info, Route0StatusValues.getStatusNa(), emptyJson, emptyJson);
         } else {
@@ -53,6 +57,10 @@ class ContentRoutePersisterService implements ContentRoutePersister {
                 .persistRoute0Content(info, Route0StatusValues.getStatusPending(), route0Content.toString(),
                     competencyRouteModel.toJson().toString());
         }
+    }
+
+    private boolean isRoute0Empty(JsonObject route0Content) {
+        return route0Content.isEmpty() || detailModels == null || detailModels.isEmpty();
     }
 
     private ContentRoutePersisterDao getPersisterDao() {
