@@ -19,10 +19,11 @@ class ContentRoutePersisterService implements ContentRoutePersister {
     private ContentRoutePersisterDao dao;
     private long contentRouteId;
     private ContentRouteInfo info;
-    private ContentRouteModel model;
+    private ContentRouteModel contentRouteModel;
     private CompetencyRouteModel competencyRouteModel;
     private static String emptyJson = new JsonObject().toString();
     private List<UserRoute0ContentDetailModel> detailModels;
+    private ContentRouteModel contentRouteModelWithPathIds;
 
     ContentRoutePersisterService(DBI dbi) {
         this.dbi = dbi;
@@ -31,12 +32,30 @@ class ContentRoutePersisterService implements ContentRoutePersister {
     @Override
     public void persist(ContentRouteInfo info, ContentRouteModel model, CompetencyRouteModel competencyRouteModel) {
         this.info = info;
-        this.model = model;
+        this.contentRouteModel = model;
         this.competencyRouteModel = competencyRouteModel;
 
-        createRouteDetails();
         persistRouteInfo();
+        createRouteDetails();
         persistRouteDetails();
+        fetchRoute0DetailsWithId();
+        if (!isRoute0Empty(contentRouteModel.toJson())) {
+            hydrateDetailsWithPathId();
+            updateRouteInfoForContentRouteWithPath();
+        }
+    }
+
+    private void updateRouteInfoForContentRouteWithPath() {
+        getPersisterDao()
+            .updateRouteInfoForRoute0Content(contentRouteId, contentRouteModelWithPathIds.toJson().toString());
+    }
+
+    private void hydrateDetailsWithPathId() {
+        contentRouteModelWithPathIds = contentRouteModel.hydrateWithContentRouteDetail(detailModels);
+    }
+
+    private void fetchRoute0DetailsWithId() {
+        detailModels = getPersisterDao().fetchDetailModelsForSpecifiedRoute0(contentRouteId);
     }
 
     private void persistRouteDetails() {
@@ -44,11 +63,11 @@ class ContentRoutePersisterService implements ContentRoutePersister {
     }
 
     private void createRouteDetails() {
-        detailModels = new UserRoute0ContentDetailModelsBuilder().build(model, contentRouteId);
+        detailModels = new UserRoute0ContentDetailModelsBuilder().build(contentRouteModel, contentRouteId);
     }
 
     private void persistRouteInfo() {
-        JsonObject route0Content = model.toJson();
+        JsonObject route0Content = contentRouteModel.toJson();
         if (isRoute0Empty(route0Content)) {
             contentRouteId =
                 getPersisterDao().persistRoute0Content(info, Route0StatusValues.getStatusNa(), emptyJson, emptyJson);

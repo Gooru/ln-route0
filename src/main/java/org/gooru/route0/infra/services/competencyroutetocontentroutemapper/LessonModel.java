@@ -28,4 +28,32 @@ public class LessonModel {
     public int getSequence() {
         return sequence;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        LessonModel that = (LessonModel) o;
+
+        if (sequence != that.sequence) {
+            return false;
+        }
+        if (!id.equals(that.id)) {
+            return false;
+        }
+        return title.equals(that.title);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + sequence;
+        return result;
+    }
 }
