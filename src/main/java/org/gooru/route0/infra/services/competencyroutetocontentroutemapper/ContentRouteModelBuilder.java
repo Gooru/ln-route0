@@ -39,7 +39,43 @@ class ContentRouteModelBuilder {
         createUnitLessonData();
         fetchSuggestionsForCompetencies();
         populateCollectionAssessmentData();
+        filterEmptyContentPathFromRoutes();
         return new ContentRouteModelImpl(unitModels, unitModelToLessonModelsMap, lessonModelToCollectionModelsMap);
+    }
+
+    private void filterEmptyContentPathFromRoutes() {
+        List<LessonModel> emptyLessons = new ArrayList<>(lessonModelToCollectionModelsMap.size());
+        List<CollectionModel> collectionModels;
+        for (Map.Entry<LessonModel, List<CollectionModel>> lessonModelListEntry : lessonModelToCollectionModelsMap
+            .entrySet()) {
+            collectionModels = lessonModelListEntry.getValue();
+            if (collectionModels == null || collectionModels.isEmpty()) {
+                emptyLessons.add(lessonModelListEntry.getKey());
+            }
+        }
+        removeEmptyLessons(emptyLessons);
+    }
+
+    private void removeEmptyLessons(List<LessonModel> emptyLessons) {
+        List<UnitModel> emptyUnitModels = new ArrayList<>();
+        for (LessonModel emptyLesson : emptyLessons) {
+            lessonModelToCollectionModelsMap.remove(emptyLesson);
+        }
+        for (Map.Entry<UnitModel, List<LessonModel>> unitModelListEntry : unitModelToLessonModelsMap.entrySet()) {
+            List<LessonModel> lessonModels = unitModelListEntry.getValue();
+            lessonModels.removeAll(emptyLessons);
+            if (lessonModels.isEmpty()) {
+                emptyUnitModels.add(unitModelListEntry.getKey());
+            }
+        }
+        removeEmptyUnits(emptyUnitModels);
+    }
+
+    private void removeEmptyUnits(List<UnitModel> emptyUnitModels) {
+        if (emptyUnitModels == null || emptyUnitModels.isEmpty()) {
+            return;
+        }
+        unitModels.removeAll(emptyUnitModels);
     }
 
     private void populateCollectionAssessmentData() {

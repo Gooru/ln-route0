@@ -2,6 +2,8 @@ package org.gooru.route0.infra.services.competencyroutetocontentroutemapper;
 
 import java.util.List;
 
+import org.gooru.route0.infra.data.UserRoute0ContentDetailModel;
+
 import io.vertx.core.json.JsonObject;
 
 /**
@@ -14,6 +16,8 @@ public interface ContentRouteModel {
     List<LessonModel> getLessonsOrderedForUnit(UnitModel unitModel);
 
     List<CollectionModel> getCollectionsOrderedInLesson(LessonModel lessonModel);
+
+    ContentRouteModel hydrateWithContentRouteDetail(List<UserRoute0ContentDetailModel> models);
 
     JsonObject toJson();
 
