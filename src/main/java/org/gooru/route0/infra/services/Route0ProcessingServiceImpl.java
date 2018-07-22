@@ -1,5 +1,7 @@
 package org.gooru.route0.infra.services;
 
+import java.util.Objects;
+
 import org.gooru.route0.infra.data.Route0QueueModel;
 import org.gooru.route0.infra.data.RouteCalculatorModel;
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteCalculator;
@@ -30,11 +32,13 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
         this.model = model;
         this.dao = dbi.onDemand(Route0RequestQueueDao.class);
         if (!recordIsStillInDispatchedState()) {
-            LOGGER.debug("Record is not found to be in dispatched state");
+            LOGGER.debug("Record is not found to be in dispatched state for user: '{}', course: '{}', class: '{}'",
+                model.getUserId().toString(), model.getCourseId(), Objects.toString(model.getClassId()));
             return;
         }
         if (route0WasAlreadyDone()) {
-            LOGGER.debug("Route0 was already done");
+            LOGGER.debug("Route0 was already done for user: '{}', course: '{}', class: '{}'",
+                model.getUserId().toString(), model.getCourseId(), Objects.toString(model.getClassId()));
             dequeueRecord();
             return;
         }
@@ -49,15 +53,23 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
     private void processRecord() {
         LOGGER.debug("Doing real processing");
         try {
+            LOGGER.debug("Will calculate competency route for user: '{}', course: '{}', class: '{}'",
+                model.getUserId().toString(), model.getCourseId(), Objects.toString(model.getClassId()));
 
             CompetencyRouteCalculator competencyRouteCalculator = CompetencyRouteCalculator.build();
             CompetencyRouteModel competencyRouteModel =
                 competencyRouteCalculator.calculateCompetencyRoute(RouteCalculatorModel.fromRoute0QueueModel(model));
 
+            LOGGER.debug("Will calculate competency to content map  for user: '{}', course: '{}', class: '{}'",
+                model.getUserId().toString(), model.getCourseId(), Objects.toString(model.getClassId()));
+
             CompetencyRouteToContentRouteMapper competencyRouteToContentRouteMapper =
                 CompetencyRouteToContentRouteMapper.build();
             ContentRouteModel contentRouteModel = competencyRouteToContentRouteMapper
                 .calculateContentRouteForCompetencyRoute(model.getUserId(), competencyRouteModel);
+
+            LOGGER.debug("Will persist route0  for user: '{}', course: '{}', class: '{}'", model.getUserId().toString(),
+                model.getCourseId(), Objects.toString(model.getClassId()));
 
             ContentRoutePersister persister = ContentRoutePersister.builder();
             ContentRouteInfo info = createContentRouteInfo();

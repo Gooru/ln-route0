@@ -14,12 +14,15 @@ import org.gooru.route0.infra.services.ContentFetcherServiceBuilder;
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteModel;
 import org.gooru.route0.infra.services.suggestionprovider.SuggestedItem;
 import org.gooru.route0.infra.services.suggestionprovider.SuggestionProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author ashish.
  */
 class ContentRouteModelBuilder {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRouteModelBuilder.class);
     private final List<UnitModel> unitModels = new ArrayList<>();
     private final Map<UnitModel, List<LessonModel>> unitModelToLessonModelsMap = new HashMap<>();
     private final Map<LessonModel, List<CollectionModel>> lessonModelToCollectionModelsMap = new HashMap<>();
@@ -36,9 +39,13 @@ class ContentRouteModelBuilder {
 
         this.userId = userId;
         this.competencyRouteModel = competencyRouteModel;
+        LOGGER.debug("Creating units/lesson data");
         createUnitLessonData();
+        LOGGER.debug("Fetching suggestions for specified competencies");
         fetchSuggestionsForCompetencies();
+        LOGGER.debug("Populating collections/assessment data");
         populateCollectionAssessmentData();
+        LOGGER.debug("Filtering empty paths from routes");
         filterEmptyContentPathFromRoutes();
         return new ContentRouteModelImpl(unitModels, unitModelToLessonModelsMap, lessonModelToCollectionModelsMap);
     }

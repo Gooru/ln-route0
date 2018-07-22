@@ -22,7 +22,7 @@ class Route0QueueRecordDispatcherServiceImpl implements Route0QueueRecordDispatc
         Route0RequestQueueDao dao = dbi.onDemand(Route0RequestQueueDao.class);
         Route0QueueModel model = dao.getNextDispatchableModel();
         if (model == null) {
-            LOGGER.debug("No records present for processing");
+            LOGGER.trace("No records present for processing");
             model = Route0QueueModel.createNonPersistedEmptyModel();
         } else {
             dao.setQueuedRecordStatusAsDispatched(model.getId());
