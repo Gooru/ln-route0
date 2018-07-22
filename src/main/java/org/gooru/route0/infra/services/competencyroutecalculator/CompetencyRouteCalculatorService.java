@@ -1,6 +1,7 @@
 package org.gooru.route0.infra.services.competencyroutecalculator;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.gooru.route0.infra.data.RouteCalculatorModel;
@@ -49,14 +50,23 @@ class CompetencyRouteCalculatorService implements CompetencyRouteCalculator {
     }
 
     private CompetencyRouteModel doProcess() {
+        LOGGER.debug("Validating class/course");
         validateClassCourse();
+        LOGGER.debug("Initializing subject code");
         initializeSubjectCode();
+        LOGGER.debug("Fetching destination gut codes");
         fetchDestinationGutCodes();
+        LOGGER.debug("Filtering gut codes for competencies");
         filterGutCodesForCompetencyForSpecifiedSubject();
+        LOGGER.debug("Creating destination competency map");
         createDestinationCompetencyMap();
+        LOGGER.debug("User user proficiency for specified subject and domains");
         fetchUserProficiencyInSpecifiedSubjectAndDomains();
+        LOGGER.debug("Creating proficiency competency map");
         createProficiencyCompetencyMap();
+        LOGGER.debug("Calculating competency route");
         calculateCompetencyRoute();
+        LOGGER.debug("Building competency route model");
         return new CompetencyRouteModelBuilder(getTaxonomyDao())
             .build(new SubjectCode(subjectCode), competencyRouteToDestination);
     }
@@ -87,6 +97,8 @@ class CompetencyRouteCalculatorService implements CompetencyRouteCalculator {
         destinationCompetencies = getTaxonomyDao()
             .transformGutCodesToCompetency(subjectCode, CollectionUtils.convertToSqlArrayOfString(destinationGutCodes));
         if (destinationCompetencies == null || destinationCompetencies.isEmpty()) {
+            LOGGER.warn("No destination competencies found after filtering aggregated gut codes for course: '{}'",
+                model.getCourseId().toString());
             throw new IllegalStateException("Destination competencies not found for course: " + model.getCourseId());
         }
     }
@@ -104,6 +116,8 @@ class CompetencyRouteCalculatorService implements CompetencyRouteCalculator {
         ClassCourseValidatorDao classCourseValidatorDao = defaultDSDbi.onDemand(ClassCourseValidatorDao.class);
         if (model.getClassId() != null) {
             if (!classCourseValidatorDao.validateClassCourse(model.getClassId(), model.getCourseId())) {
+                LOGGER.warn("Invalid class/course for request, course: '{}', class: '{}' ",
+                    model.getCourseId().toString(), Objects.toString(model.getClassId()));
                 throw new IllegalStateException(
                     "Invalid class/course for request, class:" + model.getClassId() + ", course: " + model
                         .getCourseId());

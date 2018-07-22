@@ -7,6 +7,8 @@ import org.gooru.route0.infra.data.UserRoute0ContentDetailModel;
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteModel;
 import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.ContentRouteModel;
 import org.skife.jdbi.v2.DBI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.vertx.core.json.JsonObject;
 
@@ -15,6 +17,7 @@ import io.vertx.core.json.JsonObject;
  */
 class ContentRoutePersisterService implements ContentRoutePersister {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRoutePersisterService.class);
     private final DBI dbi;
     private ContentRoutePersisterDao dao;
     private long contentRouteId;
@@ -35,12 +38,18 @@ class ContentRoutePersisterService implements ContentRoutePersister {
         this.contentRouteModel = model;
         this.competencyRouteModel = competencyRouteModel;
 
+        LOGGER.debug("Persisting route info, first pass");
         persistRouteInfo();
+        LOGGER.debug("Creating route details object");
         createRouteDetails();
+        LOGGER.debug("Persisting route details object");
         persistRouteDetails();
+        LOGGER.debug("Fetching route details to get path ids");
         fetchRoute0DetailsWithId();
         if (!isRoute0Empty(contentRouteModel.toJson())) {
+            LOGGER.debug("Route0 is not empty, will hydrate with path ids");
             hydrateDetailsWithPathId();
+            LOGGER.debug("Will update the route0Content for route info with path ids");
             updateRouteInfoForContentRouteWithPath();
         }
     }
