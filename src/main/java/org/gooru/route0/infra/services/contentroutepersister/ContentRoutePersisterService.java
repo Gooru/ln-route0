@@ -6,6 +6,7 @@ import org.gooru.route0.infra.data.Route0StatusValues;
 import org.gooru.route0.infra.data.UserRoute0ContentDetailModel;
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteModel;
 import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.ContentRouteModel;
+import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.UnitModel;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ class ContentRoutePersisterService implements ContentRoutePersister {
         persistRouteDetails();
         LOGGER.debug("Fetching route details to get path ids");
         fetchRoute0DetailsWithId();
-        if (!isRoute0Empty(contentRouteModel.toJson())) {
+        if (!isRoute0Empty()) {
             LOGGER.debug("Route0 is not empty, will hydrate with path ids");
             hydrateDetailsWithPathId();
             LOGGER.debug("Will update the route0Content for route info with path ids");
@@ -77,7 +78,7 @@ class ContentRoutePersisterService implements ContentRoutePersister {
 
     private void persistRouteInfo() {
         JsonObject route0Content = contentRouteModel.toJson();
-        if (isRoute0Empty(route0Content)) {
+        if (isRoute0Empty()) {
             contentRouteId =
                 getPersisterDao().persistRoute0Content(info, Route0StatusValues.getStatusNa(), emptyJson, emptyJson);
         } else {
@@ -87,8 +88,9 @@ class ContentRoutePersisterService implements ContentRoutePersister {
         }
     }
 
-    private boolean isRoute0Empty(JsonObject route0Content) {
-        return route0Content.isEmpty() || detailModels == null || detailModels.isEmpty();
+    private boolean isRoute0Empty() {
+        List<UnitModel> unitsOrdered = contentRouteModel.getUnitsOrdered();
+        return unitsOrdered == null || unitsOrdered.isEmpty();
     }
 
     private ContentRoutePersisterDao getPersisterDao() {
