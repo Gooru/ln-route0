@@ -66,7 +66,7 @@ public final class Route0QueueReaderAndDispatcher implements Initializer, Finali
                     Route0QueueInitializerService.build().initializeQueue();
                     firstTrigger = false;
                 }
-                LOGGER.debug("Timer handling to dispatch next record");
+                LOGGER.trace("Timer handling to dispatch next record");
                 Route0QueueModel model = Route0QueueRecordDispatcherService.build().getNextRecordToDispatch();
                 future.complete(model);
             }, asyncResult -> {

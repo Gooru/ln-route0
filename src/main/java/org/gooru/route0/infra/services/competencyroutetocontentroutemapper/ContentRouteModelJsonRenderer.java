@@ -73,6 +73,7 @@ class ContentRouteModelJsonRenderer {
             collectionModelJsonRepresentation.setCollectionSequence(collectionModel.getSequence());
             collectionModelJsonRepresentation.setTitle(collectionModel.getTitle());
             collectionModelJsonRepresentation.setCollectionType(collectionModel.getType().getName());
+            collectionModelJsonRepresentation.setPathId(collectionModel.getPathId());
             collectionModelJsonRepresentations.add(collectionModelJsonRepresentation);
         }
         return collectionModelJsonRepresentations;

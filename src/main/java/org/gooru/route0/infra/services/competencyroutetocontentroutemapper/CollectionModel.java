@@ -12,12 +12,30 @@ public class CollectionModel {
     private final String title;
     private final int sequence;
     private final CollectionModelType type;
+    private Long pathId;
+
+    public CollectionModel(UUID id, String title, int sequence, CollectionModelType type, Long pathId) {
+        this.id = id;
+        this.title = title;
+        this.sequence = sequence;
+        this.type = type;
+        this.pathId = pathId;
+    }
 
     public CollectionModel(UUID id, String title, int sequence, CollectionModelType type) {
         this.id = id;
         this.title = title;
         this.sequence = sequence;
         this.type = type;
+        this.pathId = null;
+    }
+
+    public CollectionModel(CollectionModel model, Long pathId) {
+        this.id = model.id;
+        this.title = model.title;
+        this.sequence = model.sequence;
+        this.type = model.type;
+        this.pathId = model.pathId;
     }
 
     public UUID getId() {
@@ -50,6 +68,14 @@ public class CollectionModel {
 
     public boolean isCollectionExternal() {
         return type == CollectionModelType.COLLECTION_EXTERNAL;
+    }
+
+    public Long getPathId() {
+        return pathId;
+    }
+
+    public void setPathId(Long pathId) {
+        this.pathId = pathId;
     }
 
     public enum CollectionModelType {

@@ -45,6 +45,7 @@ public class Route0ProcessingVerticle extends AbstractVerticle {
     private void processMessage(Message<String> message) {
         vertx.executeBlocking(future -> {
             try {
+                LOGGER.debug("Received record for processing");
                 Route0QueueModel model = Route0QueueModel.fromJson(message.body());
                 Route0ProcessingService.build().doRoute0(model);
                 sendMessageToPostProcessor(model);

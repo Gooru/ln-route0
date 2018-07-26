@@ -99,6 +99,7 @@ class ContentRouteModelJsonRepresentation {
         private String collectionType;
         private String title;
         private int collectionSequence;
+        private Long pathId;
 
         public String getCollectionId() {
             return collectionId;
@@ -130,6 +131,14 @@ class ContentRouteModelJsonRepresentation {
 
         public void setCollectionSequence(int collectionSequence) {
             this.collectionSequence = collectionSequence;
+        }
+
+        public Long getPathId() {
+            return pathId;
+        }
+
+        public void setPathId(Long pathId) {
+            this.pathId = pathId;
         }
     }
 
