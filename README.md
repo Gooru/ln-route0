@@ -27,7 +27,7 @@ To create the shadow (fat) jar:
 
 To run the binary which would be fat jar:
 
-    java -jar route0.jar -Dconfig.file=src/main/resources/route0.json
+    java -jar route0.jar src/main/resources/route0.json
 
 ### Fetch Route0 API
 - For route0 to be enabled, class setting should have route0 as true or in case of IL course version should be not null
