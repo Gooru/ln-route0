@@ -1,11 +1,5 @@
 package org.gooru.route0.infra.services.competencyroutetocontentroutemapper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import org.gooru.route0.infra.data.competency.CompetencyCode;
 import org.gooru.route0.infra.data.competency.CompetencyModel;
 import org.gooru.route0.infra.data.competency.DomainModel;
@@ -17,6 +11,8 @@ import org.gooru.route0.infra.services.suggestionprovider.SuggestionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.*;
+
 /**
  * @author ashish.
  */
@@ -26,7 +22,6 @@ class ContentRouteModelBuilder {
     private final List<UnitModel> unitModels = new ArrayList<>();
     private final Map<UnitModel, List<LessonModel>> unitModelToLessonModelsMap = new HashMap<>();
     private final Map<LessonModel, List<CollectionModel>> lessonModelToCollectionModelsMap = new HashMap<>();
-    private final Map<LessonModel, CompetencyModel> lessonModelCompetencyModelMap = new HashMap<>();
 
     private UUID userId;
     private CompetencyRouteModel competencyRouteModel;
@@ -34,55 +29,26 @@ class ContentRouteModelBuilder {
     private Map<CompetencyCode, List<SuggestedItem>> competencyCodeToSuggestionsListMap;
     private List<UUID> allSuggestedItems = new ArrayList<>();
     private Map<String, String> collectionIdTitleMap = new HashMap<>();
+    private final List<DomainModel> nonEmptyDomains = new ArrayList<>();
+    private final Map<DomainModel, List<CompetencyModel>> nonEmptyDomainCompetencyMap = new HashMap<>();
+    private final Map<LessonModel, CompetencyModel> lessonModelCompetencyModelMap = new HashMap<>();
 
     ContentRouteModel build(UUID userId, CompetencyRouteModel competencyRouteModel) {
 
         this.userId = userId;
         this.competencyRouteModel = competencyRouteModel;
+        LOGGER.debug("Initialize competency codes for which R0 suggestions are to be fetched");
+        initializeCompetenciesCovered();
+        LOGGER.debug("Fetch suggestions for specified competencies");
+        fetchSuggestionsForCompetencies();
+        LOGGER.debug("Populate valid tree by pruning empty items");
+        populateValidTree();
         LOGGER.debug("Creating units/lesson data");
         createUnitLessonData();
-        LOGGER.debug("Fetching suggestions for specified competencies");
-        fetchSuggestionsForCompetencies();
         LOGGER.debug("Populating collections/assessment data");
         populateCollectionAssessmentData();
-        LOGGER.debug("Filtering empty paths from routes");
-        filterEmptyContentPathFromRoutes();
+
         return new ContentRouteModelImpl(unitModels, unitModelToLessonModelsMap, lessonModelToCollectionModelsMap);
-    }
-
-    private void filterEmptyContentPathFromRoutes() {
-        List<LessonModel> emptyLessons = new ArrayList<>(lessonModelToCollectionModelsMap.size());
-        List<CollectionModel> collectionModels;
-        for (Map.Entry<LessonModel, List<CollectionModel>> lessonModelListEntry : lessonModelToCollectionModelsMap
-            .entrySet()) {
-            collectionModels = lessonModelListEntry.getValue();
-            if (collectionModels == null || collectionModels.isEmpty()) {
-                emptyLessons.add(lessonModelListEntry.getKey());
-            }
-        }
-        removeEmptyLessons(emptyLessons);
-    }
-
-    private void removeEmptyLessons(List<LessonModel> emptyLessons) {
-        List<UnitModel> emptyUnitModels = new ArrayList<>();
-        for (LessonModel emptyLesson : emptyLessons) {
-            lessonModelToCollectionModelsMap.remove(emptyLesson);
-        }
-        for (Map.Entry<UnitModel, List<LessonModel>> unitModelListEntry : unitModelToLessonModelsMap.entrySet()) {
-            List<LessonModel> lessonModels = unitModelListEntry.getValue();
-            lessonModels.removeAll(emptyLessons);
-            if (lessonModels.isEmpty()) {
-                emptyUnitModels.add(unitModelListEntry.getKey());
-            }
-        }
-        removeEmptyUnits(emptyUnitModels);
-    }
-
-    private void removeEmptyUnits(List<UnitModel> emptyUnitModels) {
-        if (emptyUnitModels == null || emptyUnitModels.isEmpty()) {
-            return;
-        }
-        unitModels.removeAll(emptyUnitModels);
     }
 
     private void populateCollectionAssessmentData() {
@@ -107,6 +73,51 @@ class ContentRouteModelBuilder {
         }
     }
 
+    private void createUnitLessonData() {
+        int i = 0;
+        for (DomainModel domainModel : nonEmptyDomains) {
+            UnitModel unitModel = new UnitModel(ModelIdGenerator.generateId(), domainModel.getDomainName(), ++i);
+            unitModelToLessonModelsMap.put(unitModel, createLessonsForDomain(domainModel));
+            unitModels.add(unitModel);
+        }
+    }
+
+    private List<LessonModel> createLessonsForDomain(DomainModel domainModel) {
+        List<CompetencyModel> competencyModels = nonEmptyDomainCompetencyMap.get(domainModel);
+        List<LessonModel> lessonModels = new ArrayList<>();
+
+        int i = 0;
+        for (CompetencyModel competencyModel : competencyModels) {
+            String title = competencyModel.getCompetencyStudentDescription();
+            if (title == null || title.isEmpty()) {
+                title = competencyModel.getCompetencyName();
+            }
+            LessonModel lessonModel = new LessonModel(ModelIdGenerator.generateId(), title, ++i);
+            lessonModels.add(lessonModel);
+            lessonModelCompetencyModelMap.put(lessonModel, competencyModel);
+        }
+        return lessonModels;
+    }
+
+
+    private void populateValidTree() {
+        List<DomainModel> domainsOrdered = competencyRouteModel.getDomainsOrdered();
+        for (DomainModel domainModel : domainsOrdered) {
+            List<CompetencyModel> pathForDomain = competencyRouteModel.getPathForDomain(domainModel.getDomainCode());
+            List<CompetencyModel> nonEmptyCompetencyModel = new ArrayList<>();
+            for (CompetencyModel competencyModel : pathForDomain) {
+                if (competencyCodeToSuggestionsListMap.get(competencyModel.getCompetencyCode()) != null) {
+                    nonEmptyCompetencyModel.add(competencyModel);
+                }
+            }
+            if (!nonEmptyCompetencyModel.isEmpty()) {
+                nonEmptyDomains.add(domainModel);
+                nonEmptyDomainCompetencyMap.put(domainModel, nonEmptyCompetencyModel);
+            }
+        }
+    }
+
+
     private void fetchSuggestionsForCompetencies() {
         competencyCodeToSuggestionsListMap = SuggestionProvider.build().suggest(userId, competencyCodesCovered);
         fetchTitlesForSuggestions();
@@ -129,33 +140,14 @@ class ContentRouteModelBuilder {
         }
     }
 
-    private void createUnitLessonData() {
-        List<DomainModel> domainModels = competencyRouteModel.getDomainsOrdered();
-        int i = 0;
-        for (DomainModel domainModel : domainModels) {
-            UnitModel unitModel = new UnitModel(ModelIdGenerator.generateId(), domainModel.getDomainName(), ++i);
-            unitModelToLessonModelsMap.put(unitModel, createLessonsForDomain(domainModel));
-            unitModels.add(unitModel);
-        }
-    }
-
-    private List<LessonModel> createLessonsForDomain(DomainModel domainModel) {
-        List<CompetencyModel> competencyModels = competencyRouteModel.getPathForDomain(domainModel.getDomainCode());
-        List<LessonModel> lessonModels = new ArrayList<>();
-
-        int i = 0;
-        for (CompetencyModel competencyModel : competencyModels) {
-            competencyCodesCovered.add(competencyModel.getCompetencyCode());
-
-            String title = competencyModel.getCompetencyStudentDescription();
-            if (title == null || title.isEmpty()) {
-                title = competencyModel.getCompetencyName();
+    private void initializeCompetenciesCovered() {
+        List<DomainModel> domainsOrdered = competencyRouteModel.getDomainsOrdered();
+        for (DomainModel domainModel : domainsOrdered) {
+            List<CompetencyModel> pathForDomain = competencyRouteModel.getPathForDomain(domainModel.getDomainCode());
+            for (CompetencyModel competencyModel : pathForDomain) {
+                competencyCodesCovered.add(competencyModel.getCompetencyCode());
             }
-            LessonModel lessonModel = new LessonModel(ModelIdGenerator.generateId(), title, i++);
-            lessonModels.add(lessonModel);
-            lessonModelCompetencyModelMap.put(lessonModel, competencyModel);
         }
-        return lessonModels;
     }
 
 }
