@@ -3,7 +3,6 @@ package org.gooru.route0.processors.fetchroute0content;
 import org.gooru.route0.infra.constants.HttpConstants;
 import org.gooru.route0.infra.exceptions.HttpResponseWrapperException;
 import org.gooru.route0.infra.services.Route0ApplicableService;
-import org.gooru.route0.infra.services.Route0RequestQueueService;
 import org.skife.jdbi.v2.DBI;
 
 /**
@@ -30,7 +29,6 @@ class FetchRoute0ContentService {
     } else {
       result = fetchRoute0ContentForIL();
     }
-    queueRoute0ContentRequestIfNeeded(result);
     return result;
   }
 
@@ -38,13 +36,6 @@ class FetchRoute0ContentService {
     if (!getDao().isUserTeacherOrCollaboratorForClass(command.asBean())) {
       throw new HttpResponseWrapperException(HttpConstants.HttpStatus.FORBIDDEN,
           "You need to be teacher or co-teacher for this class");
-    }
-  }
-
-  private void queueRoute0ContentRequestIfNeeded(FetchRoute0ContentResponse result) {
-    if (result == null) {
-      Route0RequestQueueService service = Route0RequestQueueService.build();
-      service.enqueue(command.asRoute0Context());
     }
   }
 
