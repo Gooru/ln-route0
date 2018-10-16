@@ -1,7 +1,6 @@
 package org.gooru.route0.infra.services.suggestionprovider;
 
 import java.util.UUID;
-
 import org.gooru.route0.infra.data.competency.CompetencyCode;
 
 /**
@@ -9,9 +8,9 @@ import org.gooru.route0.infra.data.competency.CompetencyCode;
  */
 public interface SuggestedItem {
 
-    CompetencyCode getCompetencyCode();
+  CompetencyCode getCompetencyCode();
 
-    UUID getItemId();
+  UUID getItemId();
 
-    ItemType getItemType();
+  ItemType getItemType();
 }

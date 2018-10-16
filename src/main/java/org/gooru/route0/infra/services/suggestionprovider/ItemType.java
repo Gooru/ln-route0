@@ -7,32 +7,32 @@ import java.util.Map;
  * @author ashish.
  */
 public enum ItemType {
-    ASSESSMENT("assessment"),
-    COLLECTION("collection");
+  ASSESSMENT("assessment"),
+  COLLECTION("collection");
 
-    private final String name;
+  private final String name;
 
-    ItemType(String name) {
-        this.name = name;
+  ItemType(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  private static final Map<String, ItemType> LOOKUP = new HashMap<>(values().length);
+
+  static {
+    for (ItemType currentItemType : values()) {
+      LOOKUP.put(currentItemType.name, currentItemType);
     }
+  }
 
-    public String getName() {
-        return name;
+  public static ItemType builder(String type) {
+    ItemType result = LOOKUP.get(type);
+    if (result == null) {
+      throw new IllegalArgumentException("Invalid ItemType: " + type);
     }
-
-    private static final Map<String, ItemType> LOOKUP = new HashMap<>(values().length);
-
-    static {
-        for (ItemType currentItemType : values()) {
-            LOOKUP.put(currentItemType.name, currentItemType);
-        }
-    }
-
-    public static ItemType builder(String type) {
-        ItemType result = LOOKUP.get(type);
-        if (result == null) {
-            throw new IllegalArgumentException("Invalid ItemType: " + type);
-        }
-        return result;
-    }
+    return result;
+  }
 }

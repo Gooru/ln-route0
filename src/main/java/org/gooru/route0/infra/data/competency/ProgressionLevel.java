@@ -4,18 +4,19 @@ package org.gooru.route0.infra.data.competency;
  * @author ashish.
  */
 public class ProgressionLevel {
-    private final int progressionLevel;
 
-    public ProgressionLevel(int progressionLevel) {
-        this.progressionLevel = progressionLevel;
-    }
+  private final int progressionLevel;
 
-    public int getProgressionLevel() {
-        return progressionLevel;
-    }
+  public ProgressionLevel(int progressionLevel) {
+    this.progressionLevel = progressionLevel;
+  }
 
-    @Override
-    public String toString() {
-        return "ProgressionLevel{" + "progressionLevel=" + progressionLevel + '}';
-    }
+  public int getProgressionLevel() {
+    return progressionLevel;
+  }
+
+  @Override
+  public String toString() {
+    return "ProgressionLevel{" + "progressionLevel=" + progressionLevel + '}';
+  }
 }
