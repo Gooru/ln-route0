@@ -27,6 +27,7 @@ public class Route0QueueModel {
   public static final int RQ_STATUS_QUEUED = 0;
   public static final int RQ_STATUS_DISPATCHED = 1;
   public static final int RQ_STATUS_INPROCESS = 2;
+  public static final int PRIORITY_DEFAULT = 1;
 
   public String toJson() {
     return new JsonObject().put("id", id).put("userId", UuidUtils.uuidToString(userId))
@@ -52,7 +53,7 @@ public class Route0QueueModel {
     result.courseId = context.getCourseId();
     result.classId = context.getClassId();
     result.status = RQ_STATUS_QUEUED;
-    result.priority = context.getSource().getOrder();
+    result.priority = PRIORITY_DEFAULT;
     return result;
   }
 

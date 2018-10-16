@@ -5,6 +5,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.JsonObject;
 import org.gooru.route0.infra.data.EventBusMessage;
+import org.gooru.route0.infra.jdbi.DBICreator;
 import org.gooru.route0.processors.AsyncMessageProcessor;
 import org.gooru.route0.responses.MessageResponse;
 import org.gooru.route0.responses.MessageResponseFactory;
@@ -22,7 +23,8 @@ public class DoRoute0OfContentProcessor implements AsyncMessageProcessor {
   private EventBusMessage eventBusMessage;
   private static final Logger LOGGER = LoggerFactory.getLogger(DoRoute0OfContentProcessor.class);
 
-  private final DoRoute0OfContentService doRoute0OfContentService = new DoRoute0OfContentService();
+  private final DoRoute0OfContentService doRoute0OfContentService = new DoRoute0OfContentService(
+      DBICreator.getDbiForDefaultDS());
 
   public DoRoute0OfContentProcessor(Vertx vertx, Message<JsonObject> message) {
     this.vertx = vertx;

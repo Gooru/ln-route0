@@ -98,7 +98,7 @@ class FetchRoute0ContentCommand {
   }
 
   Route0Context asRoute0Context() {
-    return Route0Context.buildForOOB(classId, courseId, userId);
+    return Route0Context.build(userId, courseId, classId);
   }
 
   public static final class FetchRoute0ContentCommandBean {

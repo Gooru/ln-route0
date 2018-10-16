@@ -1,13 +1,10 @@
 package org.gooru.route0.infra.services;
 
-import java.util.List;
 import java.util.UUID;
 import org.gooru.route0.infra.data.Route0QueueModel;
-import org.gooru.route0.infra.jdbi.PGArray;
 import org.gooru.route0.infra.jdbi.UUIDMapper;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.SqlBatch;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
@@ -21,26 +18,19 @@ interface Route0RequestQueueDao {
   boolean isClassNotDeletedAndNotArchived(@Bind("classId") UUID classId);
 
   @Mapper(UUIDMapper.class)
-  @SqlQuery("select user_id from class_member where class_id = :classId and user_id is not null")
-  List<UUID> fetchMembersOfClass(@Bind("classId") UUID classId);
-
-  @Mapper(UUIDMapper.class)
-  @SqlQuery("select user_id from class_member where class_id = :classId and user_id = any(:usersList)")
-  List<UUID> fetchSpecifiedMembersOfClass(@Bind("classId") UUID classId,
-      @Bind("usersList") PGArray<UUID> members);
-
-  @Mapper(UUIDMapper.class)
   @SqlQuery("select course_id from class where id = :classId")
   UUID fetchCourseForClass(@Bind("classId") UUID classId);
 
   @SqlQuery("select exists(select 1 from course where id = :courseId and is_deleted = false)")
   boolean isCourseNotDeleted(@Bind("courseId") UUID courseId);
 
-  @SqlBatch(
+  @SqlQuery("select exists (select 1 from class_member where class_id = :classId and user_id = :userId)")
+  boolean isValidMemberOfClass(@Bind("classId") UUID classId, @Bind("userId") UUID userId);
+
+  @SqlUpdate(
       "insert into route0_queue(user_id, course_id, class_id, priority, status) values (:members, :courseId,"
-          + " :classId, :priority, :status) ON CONFLICT DO NOTHING")
-  void queueRequests(@Bind("members") List<UUID> userId,
-      @BindBean Route0QueueModel route0QueueModel);
+          + " :classId, :priority, :status)")
+  void queueRequest(@BindBean Route0QueueModel route0QueueModel);
 
   @SqlUpdate("update route0_queue set status = 0 where status != 0")
   void initializeQueueStatus();

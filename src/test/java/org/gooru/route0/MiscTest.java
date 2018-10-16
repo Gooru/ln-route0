@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.gooru.route0.infra.data.Route0QueueModel;
-import org.gooru.route0.infra.data.Route0SourceType;
 
 import io.vertx.core.Context;
 import io.vertx.core.Vertx;
@@ -33,7 +32,7 @@ public class MiscTest {
         model.setCourseId(UUID.randomUUID());
         model.setUserId(UUID.randomUUID());
         model.setStatus(Route0QueueModel.RQ_STATUS_DISPATCHED);
-        model.setPriority(Route0SourceType.ClassJoinByMembers.getOrder());
+        model.setPriority(1);
         return model;
     }
 

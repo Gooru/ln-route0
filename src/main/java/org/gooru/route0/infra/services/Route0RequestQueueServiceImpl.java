@@ -1,10 +1,8 @@
 package org.gooru.route0.infra.services;
 
-import java.util.List;
 import java.util.UUID;
 import org.gooru.route0.infra.data.Route0Context;
 import org.gooru.route0.infra.data.Route0QueueModel;
-import org.gooru.route0.infra.utils.CollectionUtils;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,31 +65,16 @@ class Route0RequestQueueServiceImpl implements Route0RequestQueueService {
           "Course specified in request '{}' does not match course associated with class '{}'. Will use "
               + "the one associated with class", context.getCourseId(), courseId);
     }
+    if (!queueDao.isValidMemberOfClass(context.getClassId(), context.getUserId())) {
+      LOGGER.warn("User '{}' is not valid member of class '{}'", context.getUserId(),
+          context.getClassId());
+    }
 
-    populateMemberships(courseId);
     queueInDb();
   }
 
-  private void populateMemberships(UUID courseId) {
-    if (context.isOOBRequestForRoute0() || context.areUsersJoiningClass()) {
-      // Validate membership of provided users
-      List<UUID> existingMembersOfClassFromSpecifiedList = queueDao
-          .fetchSpecifiedMembersOfClass(context.getClassId(),
-              CollectionUtils.convertFromListUUIDToSqlArrayOfUUID(context.getMemberIds()));
-
-      if (existingMembersOfClassFromSpecifiedList.size() < context.getMemberIds().size()) {
-        LOGGER.warn("Not all specified users are members of class. Will process only members");
-      }
-      context = context.createNewContext(existingMembersOfClassFromSpecifiedList, courseId);
-    } else {
-      List<UUID> members = queueDao.fetchMembersOfClass(context.getClassId());
-      context = context.createNewContext(members, courseId);
-    }
-  }
-
   private void queueInDb() {
-    queueDao.queueRequests(context.getMemberIds(),
-        Route0QueueModel.fromRoute0ContextNoMembers(context));
+    queueDao.queueRequest(Route0QueueModel.fromRoute0ContextNoMembers(context));
   }
 
 }
