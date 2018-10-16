@@ -74,7 +74,7 @@ class Route0RequestQueueServiceImpl implements Route0RequestQueueService {
   }
 
   private void queueInDb() {
-    queueDao.queueRequest(Route0QueueModel.fromRoute0ContextNoMembers(context));
+    queueDao.queueRequest(Route0QueueModel.fromRoute0Context(context));
   }
 
 }

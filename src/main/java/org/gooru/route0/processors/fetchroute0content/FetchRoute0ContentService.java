@@ -2,7 +2,7 @@ package org.gooru.route0.processors.fetchroute0content;
 
 import org.gooru.route0.infra.constants.HttpConstants;
 import org.gooru.route0.infra.exceptions.HttpResponseWrapperException;
-import org.gooru.route0.infra.services.Route0ApplicableService;
+import org.gooru.route0.infra.services.r0applicable.Route0ApplicableService;
 import org.skife.jdbi.v2.DBI;
 
 /**
@@ -40,7 +40,7 @@ class FetchRoute0ContentService {
   }
 
   private FetchRoute0ContentResponse fetchRoute0ContentForIL() {
-    if (Route0ApplicableService.isRoute0ApplicableToCourseInIL(command.getCourseId())) {
+    if (Route0ApplicableService.build(dbi).isRoute0ApplicableToCourseInIL(command.getCourseId())) {
       return getDao().fetchRoute0ContentForUserInIL(command.asBean());
     } else {
       throw new HttpResponseWrapperException(HttpConstants.HttpStatus.BAD_REQUEST,
@@ -50,7 +50,7 @@ class FetchRoute0ContentService {
   }
 
   private FetchRoute0ContentResponse fetchRoute0ContentForClass() {
-    if (Route0ApplicableService.isRoute0ApplicableToClass(command.getClassId())) {
+    if (Route0ApplicableService.build(dbi).isRoute0ApplicableToClass(command.getClassId())) {
       return getDao().fetchRoute0ContentForUserInClass(command.asBean());
     } else {
       throw new HttpResponseWrapperException(HttpConstants.HttpStatus.BAD_REQUEST,

@@ -28,7 +28,7 @@ interface Route0RequestQueueDao {
   boolean isValidMemberOfClass(@Bind("classId") UUID classId, @Bind("userId") UUID userId);
 
   @SqlUpdate(
-      "insert into route0_queue(user_id, course_id, class_id, priority, status) values (:members, :courseId,"
+      "insert into route0_queue(user_id, course_id, class_id, priority, status) values (:userId, :courseId,"
           + " :classId, :priority, :status)")
   void queueRequest(@BindBean Route0QueueModel route0QueueModel);
 

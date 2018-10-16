@@ -48,12 +48,13 @@ public class Route0QueueModel {
     return model;
   }
 
-  public static Route0QueueModel fromRoute0ContextNoMembers(Route0Context context) {
+  public static Route0QueueModel fromRoute0Context(Route0Context context) {
     Route0QueueModel result = new Route0QueueModel();
     result.courseId = context.getCourseId();
     result.classId = context.getClassId();
     result.status = RQ_STATUS_QUEUED;
     result.priority = PRIORITY_DEFAULT;
+    result.userId = context.getUserId();
     return result;
   }
 
