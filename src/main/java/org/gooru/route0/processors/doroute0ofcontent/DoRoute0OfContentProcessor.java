@@ -4,7 +4,6 @@ import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.JsonObject;
-import org.gooru.route0.infra.data.EventBusMessage;
 import org.gooru.route0.infra.jdbi.DBICreator;
 import org.gooru.route0.processors.AsyncMessageProcessor;
 import org.gooru.route0.responses.MessageResponse;
@@ -20,7 +19,6 @@ public class DoRoute0OfContentProcessor implements AsyncMessageProcessor {
   private final Message<JsonObject> message;
   private final Vertx vertx;
   private final Future<MessageResponse> result;
-  private EventBusMessage eventBusMessage;
   private static final Logger LOGGER = LoggerFactory.getLogger(DoRoute0OfContentProcessor.class);
 
   private final DoRoute0OfContentService doRoute0OfContentService = new DoRoute0OfContentService(
@@ -36,9 +34,7 @@ public class DoRoute0OfContentProcessor implements AsyncMessageProcessor {
   public Future<MessageResponse> process() {
     vertx.<MessageResponse>executeBlocking(future -> {
       try {
-        this.eventBusMessage = EventBusMessage.eventBusMessageBuilder(message);
-        DoRoute0OfContentCommand command = DoRoute0OfContentCommand
-            .builder(eventBusMessage.getRequestBody());
+        DoRoute0OfContentCommand command = DoRoute0OfContentCommand.builder(message.body());
         doRoute0OfContentService.doRoute0(command);
         future.complete(createResponse());
       } catch (Throwable throwable) {

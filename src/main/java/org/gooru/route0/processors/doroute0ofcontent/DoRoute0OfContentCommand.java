@@ -2,6 +2,7 @@ package org.gooru.route0.processors.doroute0ofcontent;
 
 import io.vertx.core.json.JsonObject;
 import java.util.UUID;
+import org.gooru.route0.infra.constants.Constants.Message;
 import org.gooru.route0.infra.data.Route0Context;
 import org.gooru.route0.infra.utils.UuidUtils;
 
@@ -34,7 +35,8 @@ class DoRoute0OfContentCommand {
     return Route0Context.build(userId, courseId, classId);
   }
 
-  static DoRoute0OfContentCommand builder(JsonObject requestBody) {
+  static DoRoute0OfContentCommand builder(JsonObject messageBody) {
+    JsonObject requestBody = messageBody.getJsonObject(Message.MSG_HTTP_BODY);
     DoRoute0OfContentCommand result = new DoRoute0OfContentCommand();
     result.classId = UuidUtils
         .convertStringToUuid(requestBody.getString(CommandAttributes.CLASS_ID));

@@ -76,11 +76,9 @@ public final class Constants {
 
     private static final String API_BASE_ROUTE = "/api/route0/:version/";
     public static final String API_ROUTE0_FETCH = API_BASE_ROUTE + "rtd";
-    public static final String API_ROUTE0_CALCULATE = API_BASE_ROUTE + "rtd";
     public static final String API_ROUTE0_SET_STATUS = API_BASE_ROUTE + "rtd/status";
 
-    public static final String API_INTERNAL_BANNER = "/api/internal/banner";
-    public static final String API_INTERNAL_METRICS = "/api/internal/metrics";
+    public static final String API_INTERNAL_ROUTE0_CALCULATE = "/api/internal/rtd";
     public static final String API_INTERNAL_COMPETENCY_ROUTE = "/api/internal/rtd/competency";
     public static final String API_INTERNAL_COMPETENCY_CONTENT_ROUTE = "/api/internal/rtd/competency/content";
 
