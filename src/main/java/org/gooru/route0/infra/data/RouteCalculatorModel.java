@@ -32,4 +32,13 @@ public class RouteCalculatorModel {
   public static RouteCalculatorModel fromRoute0QueueModel(Route0QueueModel model) {
     return new RouteCalculatorModel(model.getUserId(), model.getCourseId(), model.getClassId());
   }
+
+  @Override
+  public String toString() {
+    return "RouteCalculatorModel{" +
+        "userId=" + userId +
+        ", courseId=" + courseId +
+        ", classId=" + classId +
+        '}';
+  }
 }
