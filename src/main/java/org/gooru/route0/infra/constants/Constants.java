@@ -12,7 +12,6 @@ public final class Constants {
     public static final String MBEP_AUTH = "org.gooru.route0.eventbus.auth";
     public static final String MBEP_ROUTE0 = "org.gooru.route0.eventbus.route0";
     public static final String MBEP_ROUTE0_QUEUE_PROCESSOR = "org.gooru.route0.eventbus.queueprocessor";
-    public static final String MBEP_ROUTE0_POST_PROCESSOR = "org.gooru.route0.eventbus.postprocessor";
 
     public static final String MBUS_TIMEOUT = "event.bus.send.timeout.seconds";
 
@@ -37,7 +36,6 @@ public final class Constants {
     public static final String MSG_HTTP_BODY = "http.body";
     public static final String MSG_HTTP_HEADERS = "http.headers";
 
-    public static final String MSG_OP_ROUTE0_LP_BASELINE = "route0.lpbaseline";
     public static final String MSG_OP_ROUTE0_GET = "route0.get";
     public static final String MSG_OP_ROUTE0_SET = "route0.set";
     public static final String MSG_OP_ROUTE0_SET_STATUS = "route0.status.set";
