@@ -1,9 +1,10 @@
 package org.gooru.route0.responses.auth;
 
 public interface AuthResponseHolder {
-    boolean isAuthorized();
 
-    boolean isAnonymous();
+  boolean isAuthorized();
 
-    String getUser();
+  boolean isAnonymous();
+
+  String getUser();
 }

@@ -5,6 +5,6 @@ package org.gooru.route0.infra.components;
  */
 public interface Finalizer {
 
-    void finalizeComponent();
+  void finalizeComponent();
 
 }

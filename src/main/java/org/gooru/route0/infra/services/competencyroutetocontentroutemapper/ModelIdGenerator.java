@@ -7,11 +7,11 @@ import java.util.UUID;
  */
 final class ModelIdGenerator {
 
-    private ModelIdGenerator() {
-        throw new AssertionError();
-    }
+  private ModelIdGenerator() {
+    throw new AssertionError();
+  }
 
-    public static UUID generateId() {
-        return UUID.randomUUID();
-    }
+  public static UUID generateId() {
+    return UUID.randomUUID();
+  }
 }
