@@ -27,6 +27,15 @@ class DoRoute0OfContentCommand {
     return userId;
   }
 
+  @Override
+  public String toString() {
+    return "DoRoute0OfContentCommand{" +
+        "classId=" + classId +
+        ", userId=" + userId +
+        ", courseId=" + courseId +
+        '}';
+  }
+
   private DoRoute0OfContentCommand() {
 
   }
