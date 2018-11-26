@@ -82,7 +82,8 @@ class ContentRoutePersisterService implements ContentRoutePersister {
     if (isRoute0Empty()) {
       contentRouteId =
           getPersisterDao()
-              .persistRoute0Content(info, Route0StatusValues.getStatusNa(), emptyJson, emptyJson);
+              .persistRoute0Content(info, Route0StatusValues.getStatusNa(), emptyJson,
+                  competencyRouteModel.toJson().toString());
     } else {
       contentRouteId = getPersisterDao()
           .persistRoute0Content(info, Route0StatusValues.getStatusPending(),
