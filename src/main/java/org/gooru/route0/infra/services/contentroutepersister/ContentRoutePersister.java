@@ -10,14 +10,15 @@ import org.skife.jdbi.v2.DBI;
  */
 public interface ContentRoutePersister {
 
-    void persist(ContentRouteInfo info, ContentRouteModel model, CompetencyRouteModel competencyRouteModel);
+  void persist(ContentRouteInfo info, ContentRouteModel model,
+      CompetencyRouteModel competencyRouteModel);
 
-    static ContentRoutePersister builder() {
-        return new ContentRoutePersisterService(DBICreator.getDbiForDefaultDS());
-    }
+  static ContentRoutePersister builder() {
+    return new ContentRoutePersisterService(DBICreator.getDbiForDefaultDS());
+  }
 
-    static ContentRoutePersister builder(DBI dbi) {
-        return new ContentRoutePersisterService(dbi);
-    }
+  static ContentRoutePersister builder(DBI dbi) {
+    return new ContentRoutePersisterService(dbi);
+  }
 
 }

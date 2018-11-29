@@ -8,11 +8,11 @@ import org.skife.jdbi.v2.DBI;
  */
 public class ContentFetcherServiceBuilder {
 
-    public static ContentFetcherService build() {
-        return new ContentFetcherServiceImpl(DBICreator.getDbiForDefaultDS());
-    }
+  public static ContentFetcherService build() {
+    return new ContentFetcherServiceImpl(DBICreator.getDbiForDefaultDS());
+  }
 
-    public static ContentFetcherService build(DBI dbi) {
-        return new ContentFetcherServiceImpl(dbi);
-    }
+  public static ContentFetcherService build(DBI dbi) {
+    return new ContentFetcherServiceImpl(dbi);
+  }
 }

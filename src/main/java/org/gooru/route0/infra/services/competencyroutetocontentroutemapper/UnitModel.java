@@ -6,25 +6,26 @@ import java.util.UUID;
  * @author ashish.
  */
 public class UnitModel {
-    private final UUID id;
-    private final String title;
-    private final int sequence;
 
-    public UnitModel(UUID id, String title, int sequence) {
-        this.id = id;
-        this.title = title;
-        this.sequence = sequence;
-    }
+  private final UUID id;
+  private final String title;
+  private final int sequence;
 
-    public UUID getId() {
-        return id;
-    }
+  public UnitModel(UUID id, String title, int sequence) {
+    this.id = id;
+    this.title = title;
+    this.sequence = sequence;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public UUID getId() {
+    return id;
+  }
 
-    public int getSequence() {
-        return sequence;
-    }
+  public String getTitle() {
+    return title;
+  }
+
+  public int getSequence() {
+    return sequence;
+  }
 }

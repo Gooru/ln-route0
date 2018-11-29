@@ -8,9 +8,10 @@ import org.gooru.route0.infra.jdbi.DBICreator;
  */
 public interface CompetencyRouteCalculator {
 
-    CompetencyRouteModel calculateCompetencyRoute(RouteCalculatorModel model);
+  CompetencyRouteModel calculateCompetencyRoute(RouteCalculatorModel model);
 
-    static CompetencyRouteCalculator build() {
-        return new CompetencyRouteCalculatorService(DBICreator.getDbiForDefaultDS(), DBICreator.getDbiForDsdbDS());
-    }
+  static CompetencyRouteCalculator build() {
+    return new CompetencyRouteCalculatorService(DBICreator.getDbiForDefaultDS(),
+        DBICreator.getDbiForDsdbDS());
+  }
 }

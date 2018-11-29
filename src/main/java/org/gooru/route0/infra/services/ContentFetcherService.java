@@ -9,6 +9,6 @@ import java.util.UUID;
  */
 public interface ContentFetcherService {
 
-    Map<String, String> fetchCollectionIdTitleMap(List<UUID> collectionIds);
+  Map<String, String> fetchCollectionIdTitleMap(List<UUID> collectionIds);
 
 }
