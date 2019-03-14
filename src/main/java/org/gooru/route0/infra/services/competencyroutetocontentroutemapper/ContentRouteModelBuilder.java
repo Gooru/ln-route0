@@ -27,6 +27,7 @@ class ContentRouteModelBuilder {
   private final Map<LessonModel, List<CollectionModel>> lessonModelToCollectionModelsMap = new HashMap<>();
 
   private UUID userId;
+  private Integer primaryLanguage;
   private CompetencyRouteModel competencyRouteModel;
   private List<CompetencyCode> competencyCodesCovered = new ArrayList<>();
   private Map<CompetencyCode, List<SuggestedItem>> competencyCodeToSuggestionsListMap;
@@ -36,10 +37,11 @@ class ContentRouteModelBuilder {
   private final Map<DomainModel, List<CompetencyModel>> nonEmptyDomainCompetencyMap = new HashMap<>();
   private final Map<LessonModel, CompetencyModel> lessonModelCompetencyModelMap = new HashMap<>();
 
-  ContentRouteModel build(UUID userId, CompetencyRouteModel competencyRouteModel) {
+  ContentRouteModel build(UUID userId, CompetencyRouteModel competencyRouteModel, Integer primaryLanguage) {
 
     this.userId = userId;
     this.competencyRouteModel = competencyRouteModel;
+    this.primaryLanguage = primaryLanguage;
     LOGGER.debug("Initialize competency codes for which R0 suggestions are to be fetched");
     initializeCompetenciesCovered();
     LOGGER.debug("Fetch suggestions for specified competencies");
@@ -126,7 +128,7 @@ class ContentRouteModelBuilder {
 
   private void fetchSuggestionsForCompetencies() {
     competencyCodeToSuggestionsListMap = SuggestionProvider.build()
-        .suggest(userId, competencyCodesCovered);
+        .suggest(userId, competencyCodesCovered, primaryLanguage);
     fetchTitlesForSuggestions();
   }
 

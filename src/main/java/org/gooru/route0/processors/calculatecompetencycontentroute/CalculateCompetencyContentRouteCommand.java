@@ -7,6 +7,7 @@ import org.gooru.route0.infra.constants.HttpConstants;
 import org.gooru.route0.infra.data.EventBusMessage;
 import org.gooru.route0.infra.data.RouteCalculatorModel;
 import org.gooru.route0.infra.exceptions.HttpResponseWrapperException;
+import org.gooru.route0.infra.utils.CollectionUtils;
 import org.gooru.route0.infra.utils.UuidUtils;
 
 /**
@@ -16,6 +17,7 @@ class CalculateCompetencyContentRouteCommand {
 
   private UUID courseId;
   private UUID userId;
+  private Integer preferredLanguage;
 
   public UUID getCourseId() {
     return courseId;
@@ -23,6 +25,10 @@ class CalculateCompetencyContentRouteCommand {
 
   public UUID getUserId() {
     return userId;
+  }
+  
+  public Integer getPreferredLanguage() {
+    return preferredLanguage;
   }
 
   public static CalculateCompetencyContentRouteCommand builder(EventBusMessage input) {
@@ -38,6 +44,8 @@ class CalculateCompetencyContentRouteCommand {
           UuidUtils.convertToUUIDList(request.getJsonArray(CommandAttributes.COURSE_ID)));
       command.userId = validateSingleValuedListAndGetFirstItem(
           UuidUtils.convertToUUIDList(request.getJsonArray(CommandAttributes.USER_ID)));
+      command.preferredLanguage = validateSingleValuedListAndGetFirstItem(CollectionUtils
+          .convertToIntegerList(request.getJsonArray(CommandAttributes.PREFERRED_LANGUAGE)));
       return command;
     } catch (IllegalArgumentException e) {
       throw new HttpResponseWrapperException(HttpConstants.HttpStatus.BAD_REQUEST, e.getMessage());
@@ -65,6 +73,10 @@ class CalculateCompetencyContentRouteCommand {
       throw new HttpResponseWrapperException(HttpConstants.HttpStatus.BAD_REQUEST,
           "Invalid course id");
     }
+    if (preferredLanguage == null) {
+      throw new HttpResponseWrapperException(HttpConstants.HttpStatus.BAD_REQUEST,
+          "Invalid preferred language");
+    }
   }
 
   RouteCalculatorModel asRouteCalculatorModel() {
@@ -75,6 +87,7 @@ class CalculateCompetencyContentRouteCommand {
 
     static final String COURSE_ID = "courseId";
     static final String USER_ID = "userId";
+    static final String PREFERRED_LANGUAGE = "preferredLanguage";
 
     private CommandAttributes() {
       throw new AssertionError();

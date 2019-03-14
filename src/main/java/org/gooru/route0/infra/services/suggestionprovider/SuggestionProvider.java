@@ -19,7 +19,8 @@ import org.skife.jdbi.v2.DBI;
  */
 public interface SuggestionProvider {
 
-  Map<CompetencyCode, List<SuggestedItem>> suggest(UUID userId, List<CompetencyCode> competencies);
+  Map<CompetencyCode, List<SuggestedItem>> suggest(UUID userId, List<CompetencyCode> competencies,
+      Integer primaryLanguage);
 
   static SuggestionProvider build(DBI dbi) {
     return new SuggestionProviderService(dbi);
@@ -28,4 +29,5 @@ public interface SuggestionProvider {
   static SuggestionProvider build() {
     return new SuggestionProviderService(DBICreator.getDbiForDefaultDS());
   }
+
 }
