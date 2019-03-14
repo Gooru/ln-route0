@@ -9,6 +9,7 @@ import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.Compe
 import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.ContentRouteModel;
 import org.gooru.route0.infra.services.contentroutepersister.ContentRouteInfo;
 import org.gooru.route0.infra.services.contentroutepersister.ContentRoutePersister;
+import org.gooru.route0.infra.services.fetchclass.ClassService;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,11 +66,13 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
       LOGGER.debug(
           "Will calculate competency to content map  for user: '{}', course: '{}', class: '{}'",
           model.getUserId().toString(), model.getCourseId(), Objects.toString(model.getClassId()));
+      
+      Integer primaryLanguageOfClass = ClassService.build(dbi).fetchPrimaryLanguageOfClass(model.getClassId());
 
       CompetencyRouteToContentRouteMapper competencyRouteToContentRouteMapper =
           CompetencyRouteToContentRouteMapper.build();
       ContentRouteModel contentRouteModel = competencyRouteToContentRouteMapper
-          .calculateContentRouteForCompetencyRoute(model.getUserId(), competencyRouteModel);
+          .calculateContentRouteForCompetencyRoute(model.getUserId(), competencyRouteModel, primaryLanguageOfClass);
 
       LOGGER.debug("Will persist route0  for user: '{}', course: '{}', class: '{}'",
           model.getUserId().toString(),

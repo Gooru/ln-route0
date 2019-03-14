@@ -1,11 +1,12 @@
 package org.gooru.route0.processors.calculatecompetencycontentroute;
 
-import io.vertx.core.json.JsonObject;
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteCalculator;
 import org.gooru.route0.infra.services.competencyroutecalculator.CompetencyRouteModel;
 import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.CompetencyRouteToContentRouteMapper;
 import org.gooru.route0.infra.services.competencyroutetocontentroutemapper.ContentRouteModel;
 import org.skife.jdbi.v2.DBI;
+
+import io.vertx.core.json.JsonObject;
 
 /**
  * @author ashish.
@@ -27,7 +28,7 @@ class CalculateCompetencyContentRouteService {
             .calculateCompetencyRoute(command.asRouteCalculatorModel());
 
     ContentRouteModel contentRouteModel = CompetencyRouteToContentRouteMapper.build()
-        .calculateContentRouteForCompetencyRoute(command.getUserId(), competencyRouteModel);
+        .calculateContentRouteForCompetencyRoute(command.getUserId(), competencyRouteModel, command.getPreferredLanguage());
 
     if (contentRouteModel.getUnitsOrdered() == null || contentRouteModel.getUnitsOrdered()
         .isEmpty()) {

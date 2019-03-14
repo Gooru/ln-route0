@@ -11,6 +11,7 @@ class CompetencyRouteToContentRouteMapperService implements CompetencyRouteToCon
 
   private final DBI dbi;
   private UUID userId;
+  private Integer primaryLanguage;
   private CompetencyRouteModel competencyRouteModel;
 
   CompetencyRouteToContentRouteMapperService(DBI dbi) {
@@ -20,10 +21,11 @@ class CompetencyRouteToContentRouteMapperService implements CompetencyRouteToCon
 
   @Override
   public ContentRouteModel calculateContentRouteForCompetencyRoute(UUID userId,
-      CompetencyRouteModel competencyRouteModel) {
+      CompetencyRouteModel competencyRouteModel, Integer primaryLanguage) {
     this.userId = userId;
+    this.primaryLanguage = primaryLanguage;
     this.competencyRouteModel = competencyRouteModel;
-    return new ContentRouteModelBuilder().build(userId, competencyRouteModel);
+    return new ContentRouteModelBuilder().build(userId, competencyRouteModel, primaryLanguage);
   }
 
 }
