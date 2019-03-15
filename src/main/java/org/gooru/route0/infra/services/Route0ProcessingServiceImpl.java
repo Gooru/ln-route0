@@ -67,12 +67,12 @@ class Route0ProcessingServiceImpl implements Route0ProcessingService {
           "Will calculate competency to content map  for user: '{}', course: '{}', class: '{}'",
           model.getUserId().toString(), model.getCourseId(), Objects.toString(model.getClassId()));
       
-      Integer primaryLanguageOfClass = ClassService.build(dbi).fetchPrimaryLanguageOfClass(model.getClassId());
+      Integer primaryLanguage = ClassService.build(dbi).fetchPrimaryLanguageOfClass(model.getClassId());
 
       CompetencyRouteToContentRouteMapper competencyRouteToContentRouteMapper =
           CompetencyRouteToContentRouteMapper.build();
       ContentRouteModel contentRouteModel = competencyRouteToContentRouteMapper
-          .calculateContentRouteForCompetencyRoute(model.getUserId(), competencyRouteModel, primaryLanguageOfClass);
+          .calculateContentRouteForCompetencyRoute(model.getUserId(), competencyRouteModel, primaryLanguage);
 
       LOGGER.debug("Will persist route0  for user: '{}', course: '{}', class: '{}'",
           model.getUserId().toString(),
