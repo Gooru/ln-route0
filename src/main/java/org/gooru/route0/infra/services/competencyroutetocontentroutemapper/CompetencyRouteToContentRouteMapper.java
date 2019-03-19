@@ -11,7 +11,7 @@ import org.skife.jdbi.v2.DBI;
 public interface CompetencyRouteToContentRouteMapper {
 
   ContentRouteModel calculateContentRouteForCompetencyRoute(UUID userId,
-      CompetencyRouteModel competencyRouteModel);
+      CompetencyRouteModel competencyRouteModel, Integer primaryLanguage);
 
   static CompetencyRouteToContentRouteMapper build() {
     return new CompetencyRouteToContentRouteMapperService(DBICreator.getDbiForDefaultDS());

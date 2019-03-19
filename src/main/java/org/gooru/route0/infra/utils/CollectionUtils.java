@@ -2,6 +2,7 @@ package org.gooru.route0.infra.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import org.gooru.route0.infra.jdbi.PGArray;
+import io.vertx.core.json.JsonArray;
 
 /**
  * @author ashish.
@@ -70,6 +72,30 @@ public class CollectionUtils {
 
   public static PGArray<UUID> convertFromListUUIDToSqlArrayOfUUID(List<UUID> input) {
     return PGArray.arrayOf(UUID.class, input);
+  }
+  
+  public static List<Integer> convertToIntegerList(JsonArray array) {
+    if (array == null || array.isEmpty()) {
+      return Collections.emptyList();
+    }
+    List<Integer> result = new ArrayList<>(array.size());
+    for (Object o : array) {
+      result.add(convertStringToInteger(o.toString()));
+    }
+    return result;
+  }
+  
+  public static Integer convertStringToInteger(String value) {
+    if (value == null || value.isEmpty()) {
+      return null;
+    }
+    Integer val = null;
+    try {
+      val = Integer.parseInt(value);
+    } catch (NumberFormatException nfe) {
+      throw new NumberFormatException("Invalid number format");
+    }
+    return val;
   }
 
 }

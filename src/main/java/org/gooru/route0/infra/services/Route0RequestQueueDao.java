@@ -24,7 +24,7 @@ interface Route0RequestQueueDao {
   @SqlQuery("select exists(select 1 from course where id = :courseId and is_deleted = false)")
   boolean isCourseNotDeleted(@Bind("courseId") UUID courseId);
 
-  @SqlQuery("select exists (select 1 from class_member where class_id = :classId and user_id = :userId)")
+  @SqlQuery("select exists (select 1 from class_member where class_id = :classId and user_id = :userId and is_active = true)")
   boolean isValidMemberOfClass(@Bind("classId") UUID classId, @Bind("userId") UUID userId);
 
   @SqlUpdate(

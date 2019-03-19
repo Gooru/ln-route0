@@ -24,7 +24,7 @@ class SuggestionProviderService implements SuggestionProvider {
 
   @Override
   public Map<CompetencyCode, List<SuggestedItem>> suggest(UUID userId,
-      List<CompetencyCode> competencies) {
+      List<CompetencyCode> competencies, Integer primaryLanguage) {
     if (competencies == null || competencies.isEmpty()) {
       return Collections.emptyMap();
     }
@@ -34,8 +34,8 @@ class SuggestionProviderService implements SuggestionProvider {
       competencyList.add(competencyCode.getCode());
     }
 
-    List<SuggestedItem> suggestedItems = getSuggestionProvideDao()
-        .fetchSuggestionsForCompetencies(CollectionUtils.convertToSqlArrayOfString(competencyList));
+    List<SuggestedItem> suggestedItems = getSuggestionProvideDao().fetchSuggestionsForCompetencies(
+        CollectionUtils.convertToSqlArrayOfString(competencyList), primaryLanguage);
 
     return transformSuggestedItemsListToMap(suggestedItems);
   }
