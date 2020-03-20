@@ -101,3 +101,112 @@ Linear representation of given competencies in plane, if both dimensions are cha
 ### Competency Route
 Give two competency lines, it denotes the competency path for each domain present in destination which is needed to collapse two lines. If the source line denotes learner proficiency skyline, and destination denotes earthline for competencies covered by course then competency route is called route to destination.
 
+## Technical drilldown: Package structure and functions
+
+Following is the list of packages and its contents. Note that abbreviated package names are used.
+
+### o.g.r.bootstrap 
+Contains the main runner class which has the main method.
+
+### o.g.r.bootstrap.verticles
+Housing for the verticles. There are four verticles as of now
+
+### o.g.r.bootstrap.verticles.AuthVerticle
+Authenticates session token with Redis
+
+### o.g.r.bootstrap.verticles.HttpVerticle
+Responsible for starting up HTTP server and registering routes
+
+### o.g.r.bootstrap.verticles.Route0Verticle
+The verticle which is main listener for API requests which is forwarded from Http server post authentication. 
+
+### o.g.r.bootstrap.verticles.Route0ProcessingVerticle
+This verticles receives a message for the queue record of rescope for processing. It takes that record and does the processing. Other components (even outside the process scope) can queue the records to get it processed.
+
+### o.g.r.infra.components
+This contains various components like config handler, data source registry etc. This also has mechanism to initialize components at the startup. Components are generally singleton.
+
+### o.g.r.infra.components.Route0QueueReaderAndDispatcher
+This is the timer based runner class which is responsible to read the Persisted queued requests and send them to Event bus so that they can be processed by listeners. It does wait for reply, so that we do not increase the backpressure on TCP bus too much, however what is replied is does not matter as we do schedule another one shot timer to do the similar stuff. For the first run, it re-initializes the status in the DB so that any tasks that were under processing when the application shut down happened would be picked up again.
+
+### o.g.r.infra.constants
+Housing for different constants used across the application.
+
+### o.g.r.infra.data
+This contains general POJO which are reusable across different modules in this application. 
+
+### o.g.r.infra.data.competency
+This package houses the whole algebra aspects of competency. This includes, but not limited to:
+- Competency model
+- Domain model
+- Competency line 
+- Competency Path
+- Competency Route
+- Progression Level (sequence id of competency)
+- Subject model
+
+This is base package responsible for doing algebra and unless there is a need to change the way algebra functions, this should be pretty constant.
+
+
+### o.g.r.infra.exceptions
+This contains exception classes which are reusable across different modules in this application. 
+
+### o.g.r.infra.jdbi
+This is JDBI specific package which contains helper entities like reusable mappers, argument factories, creators etc. This does not contain module specific DAO though. They are hosted with individual modules.
+
+### o.g.r.infra.services
+This houses infra structure services. The current services exposed are:
+- ContentFetcherService: get collection metadata like title etc given collection ids
+- Route0RequestQueueService: queue the request for doing route0 for given context
+- Route0QueueInitializerService: initialize the machinery when the application starts
+- Route0ProcessingService: real work horse service which acts as entry point to do route0 calculation
+
+### o.g.r.infra.services.competencyroutecalculator
+The business logic to do competency route calculation using the algebra.
+
+### o.g.r.infra.services.competencyroutetocontentroutemapper
+The service to convert a given competency route to a content route
+
+### o.g.r.infra.services.contentroutepersister
+The service which can persist the content route
+
+### o.g.r.infra.services.fetchclass
+The service to fetch class entity
+
+### o.g.r.infra.services.r0applicable
+The service to ascertain if the route0 is applicable in given context
+
+### o.g.r.infra.services.suggestionprovider
+Fetch the suggestions from competency_content_map, personalized for specified user for all specified competencies. With current implementation, no personalization is applied though weight is used for ordering. The list should contain one collection and one assessment for each competency at most, in that order.
+
+### o.g.r.infra.utils
+Different utility classes
+
+### o.g.r.processors
+The processors which are used as handlers for APIs
+
+### o.g.r.processors.acceptrejectroute0
+The processing handlers for API backend to catch request for doing route0. This results in queue of request.
+
+### o.g.r.processors.calculatecompetencycontentroute
+API handler to create competency and content route
+
+### o.g.r.processors.calculatecompetencyroute
+API handler to calculate the competency route only. There is no content route created/persisted.
+
+### o.g.r.processors.doroute0ofcontent
+API handlers to process API meant for triggering route0 request for a given context
+
+### o.g.r.processors.fetchroute0ofcontent
+API handlers to process API for fetching route0 content for a given context
+
+### o.g.r.processors.fetchrescopedcontent
+The processing handlers for API backend to fetch rescoped content for a specified user/class context.
+
+### o.g.s.responses.*
+Package to handler http response writing and passing it on
+
+### o.g.s.routes.*
+Utilities for the route registration for http handling and payload creation to be passes on to downstream processors.
+
+
